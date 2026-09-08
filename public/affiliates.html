@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affiliate &amp; Creator Partner Program | XtraEarn Bangladesh</title>
+  <meta name="description" content="Earn up to 25% lifetime recurring commission with the XtraEarn Affiliate Partner Program. High-converting tracking links, 60-day cookie window, and instant bKash/Nagad/Bank payouts.">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    .aff-hero {
+      background: radial-gradient(circle at 50% 0%, rgba(139,92,246,0.18) 0%, rgba(11,17,32,0.95) 70%), #0B1120;
+      padding: 70px 0 50px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .aff-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.35);
+      color: #A78BFA;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .aff-hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      max-width: 860px;
+      margin: 0 auto 18px;
+      letter-spacing: -0.02em;
+    }
+    .aff-hero h1 span {
+      background: linear-gradient(135deg, #818CF8, #C084FC, #34D399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .aff-hero p {
+      color: #94A3B8;
+      font-size: 1.1rem;
+      max-width: 680px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .aff-kpi-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 960px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .aff-kpi-card {
+      background: rgba(19, 27, 46, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .aff-kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(139,92,246,0.4);
+    }
+    .aff-kpi-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 4px 0 2px;
+    }
+    .aff-tier-card {
+      background: #131B2E;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+    .aff-tier-card:hover {
+      transform: translateY(-5px);
+      border-color: #8B5CF6;
+      box-shadow: 0 16px 32px rgba(139,92,246,0.15);
+    }
+    .aff-tier-card.highlight {
+      border-color: #10B981;
+      background: linear-gradient(180deg, rgba(16,185,129,0.08) 0%, #131B2E 100%);
+    }
+    .aff-calc-box {
+      background: #131B2E;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 36px;
+      max-width: 880px;
+      margin: 0 auto;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .aff-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #1E293B;
+      outline: none;
+      -webkit-appearance: none;
+      margin: 20px 0;
+    }
+    .aff-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #10B981;
+      cursor: pointer;
+      box-shadow: 0 0 12px rgba(16,185,129,0.6);
+    }
+    .aff-calc-grid {
+      background: #0B1120;
+      border: 1px solid rgba(139,92,246,0.3);
+      border-radius: 16px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      text-align: center;
+    }
+    .aff-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 768px) {
+      .aff-kpi-bar { grid-template-columns: 1fr 1fr; }
+      .aff-calc-grid { grid-template-columns: 1fr; gap: 18px; }
+      .aff-form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .aff-kpi-bar { grid-template-columns: 1fr; }
+      .aff-hero { padding: 48px 0 36px; }
+      .aff-hero h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NOTIFICATION BANNER -->
+<div id="top-campaign-bar" style="background:linear-gradient(90deg,#4338CA,#6D28D9,#059669);color:#fff;padding:8px 16px;text-align:center;font-size:0.86rem;font-weight:700;display:none;position:relative;z-index:999">
+  <span id="top-campaign-text">🚀 Join the XtraEarn Affiliate Drive: Earn 25% Rev-Share on all client spend!</span>
+  <a href="#join-affiliate" style="color:#FDE047;margin-left:10px;text-decoration:underline">Apply Now →</a>
+</div>
+
+<!-- HEADER / NAV -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <span class="logo-x">X</span>
+      <span class="logo-text">Xtra<b>Earn</b></span>
+    </a>
+    <nav class="nav-links">
+      <a href="/tasks">Browse Tasks</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/#experts">Verified Experts</a>
+      <a href="/affiliates" style="color:#A78BFA;font-weight:700">🤝 Partner Program</a>
+    </nav>
+    <div class="header-actions">
+      <div id="guest-actions" style="display:flex;gap:10px">
+        <a class="btn btn-outline" href="/#login" onclick="openLoginModal()">Log In</a>
+        <a class="btn btn-primary" href="/#signup" onclick="openSignupModal()">Get Started</a>
+      </div>
+      <div id="user-actions" style="display:none;align-items:center;gap:12px">
+        <a href="/wallet" class="btn btn-outline-light btn-sm" style="display:flex;align-items:center;gap:6px">
+          <span>👛</span> <b id="nav-wallet-bal" style="color:#10B981">৳0.00</b>
+        </a>
+        <a href="/profile" class="btn btn-outline btn-sm">My Dashboard</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main>
+  <!-- HERO SECTION -->
+  <section class="aff-hero">
+    <div class="container">
+      <div class="aff-hero-badge">
+        <span>✨ OFFICIAL PARTNER NETWORK</span> · <span>UP TO 25% LIFETIME COMMISSIONS</span>
+      </div>
+      <h1>Turn Your Audience &amp; Network into <span>Predictable Monthly Income</span></h1>
+      <p>Monetize your YouTube channel, tech blog, social media community, or campus club. Earn recurring revenue on every task, project, and expert consultation completed by your referrals.</p>
+      
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a href="#join-affiliate" class="btn btn-green" style="font-weight:800;font-size:1.05rem;padding:14px 28px;box-shadow:0 8px 20px rgba(16,185,129,0.3)">
+          🚀 Become an Affiliate Partner (Free)
+        </a>
+        <a href="#calculator" class="btn btn-outline-light" style="font-weight:700;font-size:1.05rem;padding:14px 24px">
+          📊 Calculate Earnings
+        </a>
+      </div>
+
+      <!-- 4 LIVE KPIS -->
+      <div class="aff-kpi-bar">
+        <div class="aff-kpi-card">
+          <small style="color:#94A3B8;font-size:0.75rem;font-weight:700;text-transform:uppercase">Attributed Volume</small>
+          <div class="aff-kpi-val" style="color:#38BDF8">৳14.2M+</div>
+          <span style="color:#34D399;font-size:0.8rem">↑ 142% Year-over-Year</span>
+        </div>
+        <div class="aff-kpi-card">
+          <small style="color:#94A3B8;font-size:0.75rem;font-weight:700;text-transform:uppercase">Active Partners</small>
+          <div class="aff-kpi-val" style="color:#A78BFA">240+</div>
+          <span style="color:#CBD5E1;font-size:0.8rem">Creators &amp; Campus Leads</span>
+        </div>
+        <div class="aff-kpi-card">
+          <small style="color:#94A3B8;font-size:0.75rem;font-weight:700;text-transform:uppercase">Commissions Paid</small>
+          <div class="aff-kpi-val" style="color:#10B981">৳2.84M+</div>
+          <span style="color:#FBBF24;font-size:0.8rem">100% Payout Reliability</span>
+        </div>
+        <div class="aff-kpi-card">
+          <small style="color:#94A3B8;font-size:0.75rem;font-weight:700;text-transform:uppercase">Cookie Window</small>
+          <div class="aff-kpi-val" style="color:#F472B6">60 Days</div>
+          <span style="color:#CBD5E1;font-size:0.8rem">Multi-Touch Attribution</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMISSION TIERS SECTION -->
+  <section style="padding:80px 0;background:#0B1120">
+    <div class="container">
+      <div style="text-align:center;max-width:650px;margin:0 auto 50px">
+        <span style="color:#8B5CF6;font-weight:800;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em">TRANSPARENT REVENUE SHARE</span>
+        <h2 style="color:#fff;font-size:2.2rem;font-weight:800;margin:6px 0 12px">Tiered Commission Architecture</h2>
+        <p style="color:#94A3B8;font-size:0.95rem">The more platform volume your community drives, the higher your commission percentage climbs.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:20px">
+        <!-- Tier 1 -->
+        <div class="aff-tier-card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:1.8rem">🌱</span>
+              <span class="badge-chip" style="background:rgba(255,255,255,0.06);color:#CBD5E1">Starter</span>
+            </div>
+            <h3 style="color:#fff;font-size:1.25rem;font-weight:800;margin:0">Standard Partner</h3>
+            <p style="color:#94A3B8;font-size:0.85rem;margin:4px 0 16px">For bloggers, freelance groups, and content creators starting out.</p>
+            <div style="font-size:2.2rem;font-weight:800;color:#10B981;margin-bottom:16px">10% <small style="font-size:0.9rem;color:#94A3B8;font-weight:500">Rev-Share</small></div>
+            <ul style="list-style:none;padding:0;margin:0;color:#CBD5E1;font-size:0.85rem;display:flex;flex-direction:column;gap:10px">
+              <li>✅ Custom Affiliate Referral Link</li>
+              <li>✅ Real-Time Click &amp; GMV Tracking</li>
+              <li>✅ Monthly bKash / Nagad Payouts</li>
+              <li>✅ 30-Day Cookie Attribution</li>
+            </ul>
+          </div>
+          <a href="#join-affiliate" class="btn btn-outline-light btn-sm" style="margin-top:24px;text-align:center;font-weight:700">Apply Standard</a>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="aff-tier-card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:1.8rem">🏢</span>
+              <span class="badge-chip" style="background:rgba(59,130,246,0.2);color:#60A5FA">Agency</span>
+            </div>
+            <h3 style="color:#fff;font-size:1.25rem;font-weight:800;margin:0">Verified Agency</h3>
+            <p style="color:#94A3B8;font-size:0.85rem;margin:4px 0 16px">For marketing agencies, developer collectives, and training hubs.</p>
+            <div style="font-size:2.2rem;font-weight:800;color:#3B82F6;margin-bottom:16px">15% <small style="font-size:0.9rem;color:#94A3B8;font-weight:500">Rev-Share</small></div>
+            <ul style="list-style:none;padding:0;margin:0;color:#CBD5E1;font-size:0.85rem;display:flex;flex-direction:column;gap:10px">
+              <li>✅ All Standard Features</li>
+              <li>✅ Bi-Weekly Automated Payouts</li>
+              <li>✅ Co-Branded Marketing Collateral</li>
+              <li>✅ 45-Day Cookie Attribution</li>
+            </ul>
+          </div>
+          <a href="#join-affiliate" class="btn btn-outline-light btn-sm" style="margin-top:24px;text-align:center;font-weight:700">Apply Agency</a>
+        </div>
+
+        <!-- Tier 3: VIP Influencer -->
+        <div class="aff-tier-card highlight">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:1.8rem">👑</span>
+              <span class="badge-chip" style="background:rgba(16,185,129,0.2);color:#34D399;font-weight:800">MOST POPULAR</span>
+            </div>
+            <h3 style="color:#fff;font-size:1.25rem;font-weight:800;margin:0">VIP Influencer</h3>
+            <p style="color:#94A3B8;font-size:0.85rem;margin:4px 0 16px">For YouTubers, TikTokers, and creators with >25K subscribers.</p>
+            <div style="font-size:2.2rem;font-weight:800;color:#10B981;margin-bottom:16px">20% <small style="font-size:0.9rem;color:#94A3B8;font-weight:500">Rev-Share</small></div>
+            <ul style="list-style:none;padding:0;margin:0;color:#CBD5E1;font-size:0.85rem;display:flex;flex-direction:column;gap:10px">
+              <li>✅ <b>Dedicated Account Manager</b></li>
+              <li>✅ Weekly Instant Payouts</li>
+              <li>✅ Custom Vanity Code (e.g. YOURNAME)</li>
+              <li>✅ Exclusive ৳150 Off Audience Coupons</li>
+              <li>✅ 60-Day Cookie Attribution</li>
+            </ul>
+          </div>
+          <a href="#join-affiliate" class="btn btn-green btn-sm" style="margin-top:24px;text-align:center;font-weight:800">Join as VIP Creator</a>
+        </div>
+
+        <!-- Tier 4: Strategic Partner -->
+        <div class="aff-tier-card">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <span style="font-size:1.8rem">⚡</span>
+              <span class="badge-chip" style="background:rgba(236,72,153,0.2);color:#F472B6">Enterprise</span>
+            </div>
+            <h3 style="color:#fff;font-size:1.25rem;font-weight:800;margin:0">Campus Strategic</h3>
+            <p style="color:#94A3B8;font-size:0.85rem;margin:4px 0 16px">For university IT clubs, hackathons, and institutional programs.</p>
+            <div style="font-size:2.2rem;font-weight:800;color:#EC4899;margin-bottom:16px">25% <small style="font-size:0.9rem;color:#94A3B8;font-weight:500">Rev-Share</small></div>
+            <ul style="list-style:none;padding:0;margin:0;color:#CBD5E1;font-size:0.85rem;display:flex;flex-direction:column;gap:10px">
+              <li>✅ Maximum Revenue Share (25%)</li>
+              <li>✅ Event Sponsorship Grants (Up to ৳50K)</li>
+              <li>✅ Direct API Webhook Integration</li>
+              <li>✅ Priority Bank Wire Payouts</li>
+            </ul>
+          </div>
+          <a href="#join-affiliate" class="btn btn-outline-light btn-sm" style="margin-top:24px;text-align:center;font-weight:700">Apply Strategic</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE EARNINGS CALCULATOR -->
+  <section id="calculator" style="padding:70px 0;background:#0F172A;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)">
+    <div class="container">
+      <div class="aff-calc-box">
+        <div style="text-align:center;margin-bottom:24px">
+          <span style="color:#10B981;font-weight:800;font-size:0.85rem;text-transform:uppercase">ESTIMATE REVENUE</span>
+          <h2 style="color:#fff;font-size:1.8rem;font-weight:800;margin:4px 0">Interactive Affiliate Earnings Calculator</h2>
+          <p style="color:#94A3B8;font-size:0.9rem">Slide to simulate your community's monthly transaction volume:</p>
+        </div>
+
+        <div style="margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="color:#CBD5E1;font-weight:700">Monthly Attributed GMV:</span>
+            <span id="calc-gmv-val" style="color:#38BDF8;font-size:1.4rem;font-weight:800">৳250,000 BDT</span>
+          </div>
+          <input type="range" class="aff-slider" id="aff-gmv-range" min="20000" max="1500000" step="10000" value="250000" oninput="updateAffiliateEarnings(this.value)">
+          <div style="display:flex;justify-content:space-between;color:#64748B;font-size:0.75rem">
+            <span>৳20,000</span>
+            <span>৳500,000</span>
+            <span>৳1,000,000</span>
+            <span>৳1,500,000+</span>
+          </div>
+        </div>
+
+        <!-- Calculated Payout Card -->
+        <div class="aff-calc-grid">
+          <div>
+            <span style="color:#94A3B8;font-size:0.78rem;text-transform:uppercase;font-weight:700">Commission Rate</span>
+            <div id="calc-rate-val" style="color:#A78BFA;font-size:1.4rem;font-weight:800;margin-top:4px">20% (VIP Tier)</div>
+          </div>
+          <div>
+            <span style="color:#94A3B8;font-size:0.78rem;text-transform:uppercase;font-weight:700">Estimated Monthly Earnings</span>
+            <div id="calc-monthly-val" style="color:#10B981;font-size:1.8rem;font-weight:800;margin-top:4px">৳50,000 BDT</div>
+          </div>
+          <div>
+            <span style="color:#94A3B8;font-size:0.78rem;text-transform:uppercase;font-weight:700">Annualized Run-Rate</span>
+            <div id="calc-annual-val" style="color:#FBBF24;font-size:1.4rem;font-weight:800;margin-top:4px">৳600,000 / yr</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION FORM SECTION -->
+  <section id="join-affiliate" style="padding:80px 0;background:#0B1120">
+    <div class="container" style="max-width:680px">
+      <div style="text-align:center;margin-bottom:32px">
+        <span style="color:#8B5CF6;font-weight:800;font-size:0.85rem;text-transform:uppercase">FAST 1-MINUTE APPLICATION</span>
+        <h2 style="color:#fff;font-size:2rem;font-weight:800;margin:6px 0">Apply to Become an Official Partner</h2>
+        <p style="color:#94A3B8;font-size:0.92rem">Get instant approval and launch your custom tracking link within minutes.</p>
+      </div>
+
+      <div style="background:#131B2E;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px">
+        <form id="public-affiliate-apply-form" onsubmit="handlePublicAffiliateApply(event)">
+          <div style="margin-bottom:16px">
+            <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">Your Full Name or Brand Name *</label>
+            <input type="text" id="pub-aff-name" class="adm-input" placeholder="e.g. Tahmid's Tech Reviews" required style="width:100%;box-sizing:border-box">
+          </div>
+
+          <div class="aff-form-row">
+            <div>
+              <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">Email Address *</label>
+              <input type="email" id="pub-aff-email" class="adm-input" placeholder="e.g. tahmid@channel.com" required style="width:100%;box-sizing:border-box">
+            </div>
+            <div>
+              <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">bKash / Nagad Phone *</label>
+              <input type="text" id="pub-aff-phone" class="adm-input" placeholder="e.g. 01711-000000" required style="width:100%;box-sizing:border-box">
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">Primary Channel / Social URL / Community *</label>
+            <input type="text" id="pub-aff-channel" class="adm-input" placeholder="e.g. YouTube: youtube.com/@techtalkbd (450K subs)" required style="width:100%;box-sizing:border-box">
+          </div>
+
+          <div class="aff-form-row" style="margin-bottom:20px">
+            <div>
+              <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">Desired Tracking Code *</label>
+              <input type="text" id="pub-aff-code" class="adm-input" placeholder="e.g. TECHTALK" required style="text-transform:uppercase;width:100%;box-sizing:border-box">
+              <small style="color:#64748B;font-size:0.75rem">Tracking link: xtraearn.com/?aff=YOURCODE</small>
+            </div>
+            <div>
+              <label style="color:#CBD5E1;font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px">Applicant Category</label>
+              <select id="pub-aff-tier" class="adm-select" style="width:100%;box-sizing:border-box">
+                <option value="vip_influencer">Content Creator / YouTuber (20%)</option>
+                <option value="verified_agency">Digital Agency / Training Hub (15%)</option>
+                <option value="strategic_partner">University Club / Event Host (25%)</option>
+                <option value="standard_partner">Community Blogger (10%)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-green" style="width:100%;padding:14px;font-weight:800;font-size:1rem;box-shadow:0 8px 16px rgba(16,185,129,0.3)">
+            ✨ Submit Partner Application
+          </button>
+        </form>
+
+        <div id="pub-aff-success-box" style="display:none;background:#0F172A;border:1px solid #10B981;border-radius:12px;padding:20px;margin-top:20px;text-align:center">
+          <span style="font-size:2rem">🎉</span>
+          <h3 style="color:#fff;font-size:1.2rem;margin:8px 0 4px">Application Approved!</h3>
+          <p style="color:#94A3B8;font-size:0.85rem;margin-bottom:14px">Your affiliate link has been activated. Start sharing with your audience:</p>
+          <div style="background:#1E293B;padding:10px 14px;border-radius:8px;font-family:monospace;color:#38BDF8;font-weight:700;word-break:break-all" id="pub-aff-link-output">
+            http://localhost:3000/?aff=CODE
+          </div>
+          <button class="btn btn-sm btn-green" onclick="navigator.clipboard.writeText(document.getElementById('pub-aff-link-output').innerText);alert('Copied to clipboard!')" style="margin-top:12px">
+            📋 Copy Affiliate Link
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERBOARD & TOP PARTNERS -->
+  <section style="padding:60px 0;background:#0F172A;border-top:1px solid rgba(255,255,255,0.06)">
+    <div class="container" style="max-width:960px">
+      <div style="text-align:center;margin-bottom:32px">
+        <span style="color:#FBBF24;font-weight:800;font-size:0.85rem;text-transform:uppercase">TOP PERFORMERS</span>
+        <h2 style="color:#fff;font-size:1.8rem;font-weight:800;margin:4px 0">Affiliate Partner Hall of Fame</h2>
+        <p style="color:#94A3B8;font-size:0.9rem">Leading creators and organizations powering the XtraEarn ecosystem:</p>
+      </div>
+
+      <div style="background:#131B2E;border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden">
+        <table class="adm-table detailed" style="margin:0">
+          <thead>
+            <tr>
+              <th>Rank &amp; Partner</th>
+              <th>Channel / Platform</th>
+              <th>Commission Tier</th>
+              <th>Attributed GMV</th>
+              <th>Paid Commission</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="public-affiliates-leaderboard">
+            <tr>
+              <td><b style="color:#FBBF24">🥇 #1 Tahmid's Tech Reviews</b></td>
+              <td>YouTube Channel (450K Subs)</td>
+              <td><span class="badge-chip" style="background:rgba(139,92,246,0.2);color:#A78BFA">VIP Influencer (20%)</span></td>
+              <td><b style="color:#fff">৳1,420,000</b></td>
+              <td><b style="color:#10B981">৳284,000 BDT</b></td>
+              <td><span class="badge-chip" style="background:rgba(16,185,129,0.2);color:#34D399">● Active</span></td>
+            </tr>
+            <tr>
+              <td><b style="color:#CBD5E1">🥈 #2 Dhaka University IT Club</b></td>
+              <td>Campus Tech Drive &amp; Events</td>
+              <td><span class="badge-chip" style="background:rgba(236,72,153,0.2);color:#F472B6">Strategic Partner (25%)</span></td>
+              <td><b style="color:#fff">৳980,000</b></td>
+              <td><b style="color:#10B981">৳245,000 BDT</b></td>
+              <td><span class="badge-chip" style="background:rgba(16,185,129,0.2);color:#34D399">● Active</span></td>
+            </tr>
+            <tr>
+              <td><b style="color:#F97316">🥉 #3 JS Developers Bangladesh</b></td>
+              <td>Facebook Group (120K Devs)</td>
+              <td><span class="badge-chip" style="background:rgba(59,130,246,0.2);color:#60A5FA">Verified Agency (15%)</span></td>
+              <td><b style="color:#fff">৳850,000</b></td>
+              <td><b style="color:#10B981">৳127,500 BDT</b></td>
+              <td><span class="badge-chip" style="background:rgba(16,185,129,0.2);color:#34D399">● Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="f-brand">
+      <a class="logo" href="/">
+        <span class="logo-x">X</span>
+        <span class="logo-text">Xtra<b>Earn</b></span>
+      </a>
+      <p>A platform where people turn their spare time, skills and expertise into extra income.</p>
+    </div>
+    <div class="f-col">
+      <h4>Growth Programs</h4>
+      <a href="/affiliates">Affiliate Program</a>
+      <a href="/wallet#referrals">Refer &amp; Earn (৳100)</a>
+      <a href="/#promotions">Active Campaigns</a>
+      <a href="/tasks?featured=1">Featured Tasks</a>
+    </div>
+    <div class="f-col">
+      <h4>For Users</h4>
+      <a href="/tasks">Find Tasks</a>
+      <a href="/wallet">My Wallet</a>
+      <a href="/profile">My Profile</a>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQs</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 XtraEarn Bangladesh. All rights reserved.</span>
+  </div>
+</footer>
+
+<script src="/js/shared.js"></script>
+<script>
+  function updateAffiliateEarnings(val) {
+    const gmv = Number(val);
+    document.getElementById('calc-gmv-val').textContent = `৳${gmv.toLocaleString()} BDT`;
+
+    let rate = 10;
+    let tierName = 'Standard';
+    if (gmv >= 500000) { rate = 25; tierName = 'Strategic Tier'; }
+    else if (gmv >= 200000) { rate = 20; tierName = 'VIP Tier'; }
+    else if (gmv >= 80000) { rate = 15; tierName = 'Agency Tier'; }
+
+    const monthlyEarnings = Math.round(gmv * (rate / 100));
+    const annualEarnings = monthlyEarnings * 12;
+
+    document.getElementById('calc-rate-val').textContent = `${rate}% (${tierName})`;
+    document.getElementById('calc-monthly-val').textContent = `৳${monthlyEarnings.toLocaleString()} BDT`;
+    document.getElementById('calc-annual-val').textContent = `৳${annualEarnings.toLocaleString()} / yr`;
+  }
+
+  async function handlePublicAffiliateApply(e) {
+    e.preventDefault();
+    const partner_name = document.getElementById('pub-aff-name').value;
+    const email = document.getElementById('pub-aff-email').value;
+    const channel = document.getElementById('pub-aff-channel').value;
+    const code = document.getElementById('pub-aff-code').value.toUpperCase().trim();
+    const tier = document.getElementById('pub-aff-tier').value;
+
+    const rate = tier === 'strategic_partner' ? 25 : tier === 'vip_influencer' ? 20 : tier === 'verified_agency' ? 15 : 10;
+
+    try {
+      const res = await api('/admin/affiliates', {
+        method: 'POST',
+        body: { code, partner_name, email, channel, tier, commission_rate: rate }
+      });
+
+      document.getElementById('public-affiliate-apply-form').style.display = 'none';
+      const successBox = document.getElementById('pub-aff-success-box');
+      successBox.style.display = 'block';
+      document.getElementById('pub-aff-link-output').textContent = `http://localhost:3000/?aff=${encodeURIComponent(code)}`;
+      toast && toast(`Congratulations ${partner_name}! Your partner link is live.`, 'success');
+    } catch (err) {
+      alert(err.message || 'Error submitting application');
+    }
+  }
+
+  // Check login state
+  (async function initAffiliatePage() {
+    try {
+      const user = await getMe();
+      if (user) {
+        document.getElementById('guest-actions').style.display = 'none';
+        document.getElementById('user-actions').style.display = 'flex';
+        document.getElementById('nav-wallet-bal').textContent = `৳${(user.wallet_balance || 0).toLocaleString()}`;
+      }
+    } catch (e) {}
+
+    // Check top campaign
+    try {
+      const cRes = await api('/campaigns/active');
+      if (cRes && cRes.items && cRes.items.length > 0) {
+        const topC = cRes.items[0];
+        document.getElementById('top-campaign-text').textContent = `🔥 ${topC.title}: ${topC.description || 'Special platform bonus active now!'}`;
+        document.getElementById('top-campaign-bar').style.display = 'block';
+      }
+    } catch (e) {}
+  })();
+</script>
+</body>
+</html>

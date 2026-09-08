@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task — XtraEarn</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2316A34A'/><text x='50' y='72' font-size='64' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>X</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=10.0">
+  <script>
+    window.toggleMobileNav = function(e) {
+      if (e) {
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
+      var nav = document.getElementById('main-nav');
+      var btn = document.getElementById('nav-toggle');
+      if (!nav) return;
+      var isOpen = nav.classList.toggle('open');
+      if (btn) {
+        btn.textContent = isOpen ? '✕' : '☰';
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    };
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <span class="logo-x">X</span>
+      <span class="logo-text">Xtra<b>Earn</b></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="/tasks">Find Tasks</a>
+      <a href="/#categories">Categories</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">Wallet</a>
+    </nav>
+    <div class="header-right">
+      <button class="lang-switch">🌐 EN <span class="caret">▾</span></button>
+      <div class="header-auth" id="header-auth"></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" onclick="toggleMobileNav(event)">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumb"><a href="/tasks">← All tasks</a></div>
+  <div class="task-detail" id="task-detail">
+    <div class="td-main"><div class="empty-state" style="grid-column:auto"><span class="big">⏳</span>Loading task...</div></div>
+    <aside class="td-side"></aside>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="f-brand">
+      <a class="logo" href="/">
+        <span class="logo-x">X</span>
+        <span class="logo-text">Xtra<b>Earn</b></span>
+      </a>
+      <p>A platform where people turn their spare time, skills and expertise into extra income.</p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>For Users</h4>
+      <a href="/tasks">Find Tasks</a>
+      <a href="/tasks">I Want to Earn</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">My Wallet</a>
+    </div>
+    <div class="f-col">
+      <h4>For Businesses</h4>
+      <a href="#" class="js-need-help">Post a Task</a>
+      <a href="/#how-it-works">Why XtraEarn</a>
+      <a href="/#experts">Verified Experts</a>
+      <a href="/#physical">On-Site Help</a>
+      <a href="/#cta">Pricing &amp; Solutions</a>
+    </div>
+    <div class="f-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Blog</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQs</a>
+      <a href="#">Safety Center</a>
+      <a href="#">Community</a>
+    </div>
+    <div class="f-col f-app">
+      <h4>Download Our App</h4>
+      <a class="store-badge" href="#">▶<span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="#"><span class="apple"></span><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 XtraEarn. All rights reserved.</span>
+    <span class="fb-right">
+      <span class="lang-switch dark">🌐 English ▾</span>
+      <span class="lang-switch dark">BDT (৳) ▾</span>
+    </span>
+  </div>
+</footer>
+
+<!-- ================= MODAL: BOOST / FEATURE TASK ================= -->
+<div class="modal-overlay" id="modal-boost-task" onclick="if(event.target===this)closeModal('modal-boost-task')">
+  <div class="modal modal-wide" style="max-width:640px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div>
+        <h3 style="color:#fff;margin:0;font-size:1.2rem;font-weight:800">🚀 Boost &amp; Feature This Task</h3>
+        <p style="color:#94A3B8;font-size:0.82rem;margin:3px 0 0">Increase applicant proposals by up to 5x with high-visibility sponsored placement.</p>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-boost-task')">✕</button>
+    </div>
+
+    <form id="form-boost-task" onsubmit="handleBoostTaskSubmit(event)">
+      <div style="font-size:0.78rem;color:#A78BFA;font-weight:700;text-transform:uppercase;margin-bottom:8px">Select Promotional Tier *</div>
+      <div id="boost-plans-selector" class="boost-plan-grid"></div>
+
+      <div style="background:#111827;border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 14px;margin:16px 0;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">⚡</span>
+          <div>
+            <b style="color:#FBBF24;font-size:0.85rem">Instant Wallet Charge</b>
+            <div style="color:#94A3B8;font-size:0.76rem">Fee deducted directly from your account balance.</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.72rem;color:#94A3B8">Total Fee</div>
+          <div id="boost-plan-fee-display" style="font-size:1.2rem;font-weight:800;color:#FBBF24">৳100</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button type="button" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-boost-task')">Cancel</button>
+        <button type="submit" class="btn btn-green" style="font-weight:800;padding:10px 24px">🔥 Boost Task Now</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/shared.js?v=10.0"></script>
+<script src="/js/task.js?v=10.0"></script>
+</body>
+</html>

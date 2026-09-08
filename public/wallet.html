@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wallet — XtraEarn</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2316A34A'/><text x='50' y='72' font-size='64' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>X</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=10.0">
+  <script>
+    window.toggleMobileNav = function(e) {
+      if (e) {
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
+      var nav = document.getElementById('main-nav');
+      var btn = document.getElementById('nav-toggle');
+      if (!nav) return;
+      var isOpen = nav.classList.toggle('open');
+      if (btn) {
+        btn.textContent = isOpen ? '✕' : '☰';
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    };
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <span class="logo-x">X</span>
+      <span class="logo-text">Xtra<b>Earn</b></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="/tasks">Find Tasks</a>
+      <a href="/#categories">Categories</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">Wallet</a>
+    </nav>
+    <div class="header-right">
+      <button class="lang-switch">🌐 EN <span class="caret">▾</span></button>
+      <div class="header-auth" id="header-auth"></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" onclick="toggleMobileNav(event)">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container">
+    <h1>💰 My Wallet</h1>
+    <p>Deposit to fund task escrow, or withdraw your earnings via bKash, Nagad or bank.</p>
+  </div>
+</section>
+
+<main class="container wallet-layout" id="wallet-root">
+  <div class="empty-state" style="grid-column:auto"><span class="big">⏳</span>Loading wallet...</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="f-brand">
+      <a class="logo" href="/">
+        <span class="logo-x">X</span>
+        <span class="logo-text">Xtra<b>Earn</b></span>
+      </a>
+      <p>A platform where people turn their spare time, skills and expertise into extra income.</p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>For Users</h4>
+      <a href="/tasks">Find Tasks</a>
+      <a href="/tasks">I Want to Earn</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">My Wallet</a>
+    </div>
+    <div class="f-col">
+      <h4>For Businesses</h4>
+      <a href="#" class="js-need-help">Post a Task</a>
+      <a href="/#how-it-works">Why XtraEarn</a>
+      <a href="/#experts">Verified Experts</a>
+      <a href="/#physical">On-Site Help</a>
+      <a href="/#cta">Pricing &amp; Solutions</a>
+    </div>
+    <div class="f-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Blog</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQs</a>
+      <a href="#">Safety Center</a>
+      <a href="#">Community</a>
+    </div>
+    <div class="f-col f-app">
+      <h4>Download Our App</h4>
+      <a class="store-badge" href="#">▶<span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="#"><span class="apple"></span><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 XtraEarn. All rights reserved.</span>
+    <span class="fb-right">
+      <span class="lang-switch dark">🌐 English ▾</span>
+      <span class="lang-switch dark">BDT (৳) ▾</span>
+    </span>
+  </div>
+</footer>
+
+<script src="/js/countries.js"></script>
+<script src="/js/shared.js?v=10.0"></script>
+<script src="/js/wallet.js?v=10.0"></script>
+</body>
+</html>

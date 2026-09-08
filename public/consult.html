@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XtraEarn Consult HD | 1-on-1 Encrypted Video Consultation</title>
+  <meta name="description" content="Secure WebRTC 1-on-1 video consultation suite with verified doctors, lawyers, engineers, and financial advisors. Escrow protected.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/consult.css">
+</head>
+<body class="consult-body">
+
+  <!-- ================= TOP STATUS BAR ================= -->
+  <header class="consult-header">
+    <div class="consult-hdr-left">
+      <a href="/" class="consult-logo" title="Back to XtraEarn Home">
+        <span class="consult-logo-icon">X</span>
+        <span class="consult-logo-text">Xtra<b>Earn</b> <span class="badge-hd">CONSULT HD</span></span>
+      </a>
+      <div class="room-code-tag" id="room-code-badge" title="Click to copy room link" onclick="copyRoomShareLink()">
+        <span class="pulse-dot"></span>
+        <span id="txt-room-code">CNS-LIVE</span>
+        <span class="copy-icon">📋</span>
+      </div>
+    </div>
+
+    <div class="consult-hdr-center">
+      <div class="specialist-tag" id="specialist-header-pill">
+        <span class="spec-avatar" id="hdr-spec-avatar">🧠</span>
+        <div>
+          <b id="hdr-spec-name">Dr. Faisal Rahman (MBBS, MD)</b>
+          <span id="hdr-spec-license">BMDC Reg: A-58921 · Consultant Cardiologist</span>
+        </div>
+      </div>
+      <div class="e2e-badge" title="WebRTC AES-256 Bit Peer-to-Peer Encryption Active">
+        <span class="lock-icon">🔒</span>
+        <span>256-bit Encrypted</span>
+      </div>
+    </div>
+
+    <div class="consult-hdr-right">
+      <div class="escrow-pill" title="100% Protected Escrow Guarantee">
+        <span class="escrow-icon">🛡️</span>
+        <span id="hdr-escrow-amount">৳2,200 Escrow Held</span>
+      </div>
+
+      <div class="session-timer" id="session-countdown-pill" title="Time remaining for this tier">
+        <span class="timer-icon">⏱️</span>
+        <span id="txt-timer-countdown">29:55</span>
+      </div>
+
+      <div class="network-badge" id="net-quality-indicator" title="Connection: WebRTC 1080p 60fps HD (16ms)">
+        <span class="net-bars">
+          <span class="bar b1"></span>
+          <span class="bar b2"></span>
+          <span class="bar b3"></span>
+          <span class="bar b4"></span>
+        </span>
+        <span class="net-text">HD 60fps</span>
+      </div>
+
+      <button class="btn-leave-room" onclick="promptEndSession()" title="Leave or Finish Consultation">
+        <span>🔴</span> End Call
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONSULTATION WORKSPACE ================= -->
+  <main class="consult-workspace">
+    <!-- VIDEO STAGE (LEFT / CENTER) -->
+    <section class="video-stage-container" id="video-stage">
+      
+      <!-- MAIN REMOTE STREAM VIEWPORT -->
+      <div class="remote-video-frame" id="remote-frame">
+        <video id="remote-video" autoplay playsinline class="video-element"></video>
+        
+        <!-- Animated Simulated Specialist Canvas / Fallback Avatar -->
+        <div class="specialist-sim-view" id="sim-specialist-viewport">
+          <div class="sim-avatar-circle" id="sim-avatar-circle">
+            <span id="sim-avatar-emoji">👨‍⚕️</span>
+            <div class="audio-pulse-ring"></div>
+            <div class="audio-pulse-ring r2"></div>
+          </div>
+          <h3 id="sim-specialist-name">Dr. Faisal Rahman (MBBS, MD)</h3>
+          <p id="sim-specialist-title">Consultant Cardiologist &amp; Internal Medicine</p>
+          <div class="sim-waveform" id="sim-waveform-box">
+            <span class="w-bar" style="--h:40%"></span>
+            <span class="w-bar" style="--h:70%"></span>
+            <span class="w-bar" style="--h:100%"></span>
+            <span class="w-bar" style="--h:85%"></span>
+            <span class="w-bar" style="--h:50%"></span>
+            <span class="w-bar" style="--h:90%"></span>
+            <span class="w-bar" style="--h:60%"></span>
+            <span class="w-bar" style="--h:30%"></span>
+          </div>
+        </div>
+
+        <!-- Remote Stream Info Overlay HUD -->
+        <div class="stream-hud-overlay top-left">
+          <div class="hud-spec-pill">
+            <span class="status-indicator live"></span>
+            <span id="hud-spec-display-name">Dr. Faisal Rahman</span>
+            <span class="hud-role-badge">Specialist</span>
+          </div>
+        </div>
+
+        <div class="stream-hud-overlay top-right" id="screen-share-active-badge" style="display:none">
+          <span class="share-badge">🖥️ Live Screen Sharing</span>
+        </div>
+
+        <!-- FLOATING SELF-VIEW PiP -->
+        <div class="local-pip-tile" id="local-pip" draggable="true">
+          <video id="local-video" autoplay muted playsinline class="pip-video-element"></video>
+          <div class="pip-avatar-fallback" id="pip-fallback">
+            <span>👤</span>
+          </div>
+          <div class="pip-hud-bar">
+            <span id="pip-user-label">You (Client)</span>
+            <div class="pip-icons">
+              <span id="pip-mic-icon">🎙️</span>
+              <span id="pip-cam-icon">📹</span>
+            </div>
+          </div>
+          <button class="btn-pip-minimize" onclick="togglePipSize()" title="Toggle Size">⤢</button>
+        </div>
+
+      </div>
+
+      <!-- ================= FLOATING ACTION DOCK ================= -->
+      <nav class="action-dock" aria-label="Meeting Controls">
+        <div class="dock-inner">
+          <button class="dock-btn active" id="btn-toggle-mic" onclick="toggleMicrophone()" title="Mute/Unmute Mic (M)">
+            <span class="dock-icon" id="icon-mic">🎙️</span>
+            <span class="dock-label" id="label-mic">Mute</span>
+          </button>
+
+          <button class="dock-btn active" id="btn-toggle-cam" onclick="toggleCamera()" title="Turn Video Camera On/Off (V)">
+            <span class="dock-icon" id="icon-cam">📹</span>
+            <span class="dock-label" id="label-cam">Stop Video</span>
+          </button>
+
+          <button class="dock-btn" id="btn-toggle-screen" onclick="toggleScreenShare()" title="Share Screen (S)">
+            <span class="dock-icon">🖥️</span>
+            <span class="dock-label" id="label-screen">Share Screen</span>
+          </button>
+
+          <div class="dock-divider"></div>
+
+          <button class="dock-btn active" id="btn-toggle-chat" onclick="switchDrawerTab('chat')" title="In-Call Chat & Diagnostics">
+            <span class="dock-icon">💬</span>
+            <span class="dock-label">Chat</span>
+            <span class="badge-unread" id="chat-unread-count" style="display:none">1</span>
+          </button>
+
+          <button class="dock-btn" id="btn-toggle-notes" onclick="switchDrawerTab('notes')" title="Digital Prescription & Advisory Pad">
+            <span class="dock-icon">📝</span>
+            <span class="dock-label">Advice Pad</span>
+            <span class="badge-dot" id="notes-sync-dot"></span>
+          </button>
+
+          <button class="dock-btn ext-btn" onclick="openExtensionModal()" title="Request 15-Min Extension">
+            <span class="dock-icon">⚡</span>
+            <span class="dock-label">+15 Mins</span>
+          </button>
+
+          <div class="dock-divider"></div>
+
+          <button class="dock-btn end-btn" onclick="promptEndSession()" title="Complete Consultation">
+            <span class="dock-icon">🔴</span>
+            <span class="dock-label">End Session</span>
+          </button>
+        </div>
+      </nav>
+
+    </section>
+
+    <!-- ================= RIGHT COLLAPSIBLE DRAWER ================= -->
+    <aside class="consult-drawer" id="consult-drawer">
+      <!-- Drawer Navigation Tabs -->
+      <div class="drawer-tabs">
+        <button class="drawer-tab-btn active" id="tab-btn-chat" onclick="switchDrawerTab('chat')">
+          <span>💬 In-Call Chat &amp; Files</span>
+        </button>
+        <button class="drawer-tab-btn" id="tab-btn-notes" onclick="switchDrawerTab('notes')">
+          <span>📝 Digital Prescription / Advice</span>
+        </button>
+        <button class="btn-drawer-close" onclick="toggleDrawerCollapse()" title="Collapse Panel">✕</button>
+      </div>
+
+      <!-- ================= TAB 1: LIVE CHAT & DIAGNOSTIC ATTACHMENTS ================= -->
+      <div class="drawer-content" id="drawer-tab-chat">
+        <!-- Message Stream -->
+        <div class="chat-messages-scroll" id="chat-messages-container">
+          <!-- Rendered via JS -->
+        </div>
+
+        <!-- Quick Canned Message Chips -->
+        <div class="quick-canned-chips">
+          <button class="chip" onclick="sendQuickReply('Audio and video are perfectly clear! 👍')">Clear Audio/Video 👍</button>
+          <button class="chip" onclick="sendQuickReply('Please check the diagnostic reports attached.')">Sent Reports 📑</button>
+          <button class="chip" onclick="sendQuickReply('Prescription and advice noted, thank you doctor!')">Noted Advice ✅</button>
+        </div>
+
+        <!-- File Upload Preview Box -->
+        <div class="chat-file-preview-strip" id="chat-file-preview" style="display:none">
+          <span class="file-icon">📄</span>
+          <span class="file-name" id="preview-file-name">CBC_Blood_Report_2026.pdf</span>
+          <button class="btn-remove-file" onclick="cancelFileAttachment()">✕</button>
+        </div>
+
+        <!-- Chat Input Form -->
+        <form class="chat-input-bar" id="chat-input-form" onsubmit="handleSendChatMessage(event)">
+          <label class="btn-attach" title="Attach Diagnostic Lab Report, Contract, or X-Ray">
+            📎
+            <input type="file" id="chat-file-input" onchange="handleFileSelected(event)" style="display:none" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,.dcm">
+          </label>
+          <input type="text" id="chat-message-input" placeholder="Type message to specialist or client..." autocomplete="off">
+          <button type="submit" class="btn-send-msg" title="Send Message">➤</button>
+        </form>
+      </div>
+
+      <!-- ================= TAB 2: LIVE DIGITAL PRESCRIPTION / ADVICE PAD ================= -->
+      <div class="drawer-content" id="drawer-tab-notes" style="display:none">
+        <div class="rx-pad-header">
+          <div class="rx-logo-title">
+            <span class="rx-icon">℞</span>
+            <div>
+              <h4 id="rx-spec-name">Dr. Faisal Rahman (MBBS, MD)</h4>
+              <p id="rx-spec-sub">BMDC Reg: A-58921 · XtraEarn Verified Specialist Pad</p>
+            </div>
+          </div>
+          <button class="btn-download-rx" onclick="downloadPrescriptionPdf()" title="Download Signed Digital Copy">
+            📥 Download PDF
+          </button>
+        </div>
+
+        <div class="rx-pad-body">
+          <div class="rx-meta-grid">
+            <div>
+              <label>Patient / Client Name</label>
+              <input type="text" id="rx-client-name" class="rx-input" value="Farhana Karim" readonly>
+            </div>
+            <div>
+              <label>Consultation Date</label>
+              <input type="text" id="rx-date" class="rx-input" value="2026-08-31" readonly>
+            </div>
+          </div>
+
+          <div class="rx-section">
+            <label class="rx-section-label">📋 Chief Complaints / Case Symptoms</label>
+            <textarea id="rx-complaints" class="rx-textarea" rows="2" placeholder="Client symptoms or case requirements discussed in consultation..." oninput="handleNotesAutoSave()"></textarea>
+          </div>
+
+          <div class="rx-section">
+            <label class="rx-section-label">🩺 Clinical Assessment / Legal Opinion</label>
+            <textarea id="rx-diagnosis" class="rx-textarea" rows="3" placeholder="Primary diagnosis, legal vetting finding, structural evaluation..." oninput="handleNotesAutoSave()"></textarea>
+          </div>
+
+          <div class="rx-section">
+            <label class="rx-section-label">💊 Rx Medications &amp; Action Plan</label>
+            <textarea id="rx-prescriptions" class="rx-textarea" rows="4" placeholder="1. Tab. Rosuvastatin 10mg - 1 at night (30 days)&#10;2. Tab. Bisoprolol 2.5mg - 1 in morning..." oninput="handleNotesAutoSave()"></textarea>
+          </div>
+
+          <div class="rx-section">
+            <label class="rx-section-label">🗓️ Follow-up &amp; Next Review Instructions</label>
+            <textarea id="rx-followup" class="rx-textarea" rows="2" placeholder="Review lipid profile in 4 weeks or if chest discomfort recurs." oninput="handleNotesAutoSave()"></textarea>
+          </div>
+
+          <div class="rx-signature-block">
+            <div class="sig-seal">
+              <span class="seal-icon">🛡️</span>
+              <span class="seal-text">VERIFIED DIGITAL SIGNATURE<br>AES-256 PKI VALIDATED</span>
+            </div>
+            <div class="sig-name">
+              <b id="rx-sig-name">Dr. Faisal Rahman</b>
+              <span>Consultant Cardiologist</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </main>
+
+  <!-- ================= MODAL: END SESSION & SATISFACTION REVIEW ================= -->
+  <div class="consult-modal-backdrop" id="modal-end-session" onclick="if(event.target===this)closeModal('modal-end-session')">
+    <div class="consult-modal-box">
+      <div class="cmodal-header">
+        <div class="cmodal-icon-title">
+          <span class="cmodal-icon">⭐</span>
+          <div>
+            <h3 style="margin:0;color:#fff;font-size:1.15rem;font-weight:800">Consultation Session Completed</h3>
+            <p style="margin:2px 0 0;color:#94A3B8;font-size:0.78rem">Rate your session experience and release escrow funds</p>
+          </div>
+        </div>
+        <button class="cmodal-close" onclick="closeModal('modal-end-session')">✕</button>
+      </div>
+
+      <form id="form-session-review" onsubmit="handleSessionCompletionSubmit(event)">
+        <!-- Specialist Mini Profile Card -->
+        <div class="cmodal-spec-card">
+          <div class="cmodal-avatar" id="modal-spec-avatar">🧠</div>
+          <div>
+            <h4 id="modal-spec-name" style="margin:0;color:#fff;font-size:0.95rem;font-weight:800">Dr. Faisal Rahman (MBBS, MD)</h4>
+            <p id="modal-spec-title" style="margin:2px 0 0;color:#94A3B8;font-size:0.78rem">Consultant Cardiologist · 15-Min Quick Consultation</p>
+          </div>
+        </div>
+
+        <!-- Star Rating Widget -->
+        <div class="star-rating-widget">
+          <label style="color:#E2E8F0;font-size:0.84rem;font-weight:700;display:block;margin-bottom:8px">How satisfied are you with this consultation?</label>
+          <div class="stars-row" id="stars-container">
+            <span class="star active" data-rating="1" onclick="setStarRating(1)">★</span>
+            <span class="star active" data-rating="2" onclick="setStarRating(2)">★</span>
+            <span class="star active" data-rating="3" onclick="setStarRating(3)">★</span>
+            <span class="star active" data-rating="4" onclick="setStarRating(4)">★</span>
+            <span class="star active" data-rating="5" onclick="setStarRating(5)">★</span>
+          </div>
+          <span class="rating-label" id="rating-desc-text">5.0 - Outstanding &amp; Highly Insightful</span>
+        </div>
+
+        <!-- Feedback Tags / Compliments -->
+        <div class="compliment-tags">
+          <label class="tag-chip active"><input type="checkbox" checked hidden> Accurate Diagnosis</label>
+          <label class="tag-chip active"><input type="checkbox" checked hidden> Clear Explanation</label>
+          <label class="tag-chip active"><input type="checkbox" checked hidden> Fast Response</label>
+          <label class="tag-chip"><input type="checkbox" hidden> Highly Patient</label>
+        </div>
+
+        <!-- Review Text -->
+        <div style="margin-bottom:16px">
+          <label style="color:#94A3B8;font-size:0.78rem;font-weight:600;display:block;margin-bottom:6px">Detailed Feedback / Testimonial</label>
+          <textarea id="modal-review-text" class="cmodal-textarea" rows="3" placeholder="Share your experience to help other clients on XtraEarn..."></textarea>
+        </div>
+
+        <!-- Escrow Protection Release Summary -->
+        <div class="escrow-release-box">
+          <div class="escrow-rel-left">
+            <span>🔒 Escrow Funds to Release</span>
+            <b id="modal-escrow-fee">৳2,200</b>
+          </div>
+          <div class="escrow-rel-status">
+            <span>✅ 100% Escrow Protected</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="cmodal-actions">
+          <button type="button" class="btn-cancel" onclick="closeModal('modal-end-session')">Return to Call</button>
+          <button type="submit" class="btn-confirm-end">Complete Session &amp; Release Escrow</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: SESSION EXTENSION ================= -->
+  <div class="consult-modal-backdrop" id="modal-session-extension" onclick="if(event.target===this)closeModal('modal-session-extension')">
+    <div class="consult-modal-box extension-box">
+      <div class="cmodal-header">
+        <h3 style="margin:0;color:#fff;font-size:1.15rem;font-weight:800">⏱️ Extend Consultation Time</h3>
+        <button class="cmodal-close" onclick="closeModal('modal-session-extension')">✕</button>
+      </div>
+      <div style="padding:18px 20px">
+        <p style="color:#94A3B8;font-size:0.84rem;margin:0 0 16px">Need more time to discuss diagnostic scans or legal documents? Choose an extension tier:</p>
+
+        <div class="extension-options">
+          <label class="ext-option active" onclick="selectExtensionOption(15, 600, this)">
+            <input type="radio" name="ext-tier" value="15" checked>
+            <div class="ext-info">
+              <b>+15 Minutes Extension</b>
+              <span>Quick Q&amp;A &amp; Prescription Wrap-up</span>
+            </div>
+            <span class="ext-price">৳600</span>
+          </label>
+
+          <label class="ext-option" onclick="selectExtensionOption(30, 1200, this)">
+            <input type="radio" name="ext-tier" value="30">
+            <div class="ext-info">
+              <b>+30 Minutes Deep Dive</b>
+              <span>Comprehensive File Review &amp; Strategy</span>
+            </div>
+            <span class="ext-price">৳1,200</span>
+          </label>
+        </div>
+
+        <div class="cmodal-actions" style="margin-top:18px">
+          <button type="button" class="btn-cancel" onclick="closeModal('modal-session-extension')">Cancel</button>
+          <button type="button" class="btn-confirm-end" onclick="handleConfirmExtension()">Confirm &amp; Top-up Escrow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/consult.js"></script>
+</body>
+</html>

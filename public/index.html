@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XtraEarn — Turn your spare time into extra income</title>
+  <meta name="description" content="XtraEarn is Bangladesh's micro-task platform. Thousands of people are earning by doing small tasks, sharing skills and helping others.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2316A34A'/><text x='50' y='72' font-size='64' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>X</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=10.0">
+  <script>
+    window.toggleMobileNav = function(e) {
+      if (e) {
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
+      var nav = document.getElementById('main-nav');
+      var btn = document.getElementById('nav-toggle');
+      if (!nav) return;
+      var isOpen = nav.classList.toggle('open');
+      if (btn) {
+        btn.textContent = isOpen ? '✕' : '☰';
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    };
+  </script>
+</head>
+<body>
+
+<!-- ================= DYNAMIC TOP PROMOTIONAL CAMPAIGN BAR ================= -->
+<div id="top-campaign-bar" class="top-campaign-bar" style="display:none">
+  <div class="top-campaign-inner">
+    <div class="top-camp-left">
+      <span class="top-camp-badge" id="top-camp-badge">PROMO</span>
+      <span class="top-camp-text" id="top-camp-text">🎉 Ramadan & Eid Mega Bounties: <b>0% Platform Fee + Double XP</b> on all tasks!</span>
+    </div>
+    <div class="top-camp-right">
+      <button class="top-camp-btn" id="btn-claim-top-camp" onclick="handleTopCampaignClaimClick()">Claim Deal ⚡</button>
+      <button class="top-camp-close" onclick="document.getElementById('top-campaign-bar').style.display='none'" aria-label="Close Announcement">✕</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <span class="logo-x">X</span>
+      <span class="logo-text">Xtra<b>Earn</b></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="/tasks">Find Tasks</a>
+      <a href="/#categories">Categories</a>
+      <a href="/#experts" style="color:#A78BFA;font-weight:700">🧠 1-on-1 Experts</a>
+      <a href="/#pro-spotlight" style="color:#38BDF8;font-weight:700">💎 Talent Spotlight</a>
+    </nav>
+    <div class="header-right">
+      <button class="lang-switch">🌐 EN <span class="caret">▾</span></button>
+      <div class="header-auth" id="header-auth"></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" onclick="toggleMobileNav(event)">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="sec-hero">
+  <div class="hero-x-shape" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <span class="hero-badge">✨ Your Time. Your Skills. Extra Income.</span>
+      <h1>Turn your spare time<br>into <em>extra income</em></h1>
+      <p class="hero-sub">Thousands of people are earning by doing small tasks,<br class="desk-only"> sharing skills and helping others.</p>
+
+      <div class="action-cards" id="action-cards">
+        <button class="action-card" data-act="post">
+          <span class="ac-icon" style="background:#22C55E">🆘</span>
+          <span class="ac-text"><b>I NEED HELP</b><small>Post a task</small></span>
+          <span class="ac-arrow" style="background:#22C55E">→</span>
+        </button>
+        <button class="action-card" data-act="find">
+          <span class="ac-icon" style="background:#3B82F6">💼</span>
+          <span class="ac-text"><b>I WANT TO EARN</b><small>Find tasks</small></span>
+          <span class="ac-arrow" style="background:#3B82F6">→</span>
+        </button>
+        <button class="action-card" data-act="skill">
+          <span class="ac-icon" style="background:#8B5CF6">🧑‍💻</span>
+          <span class="ac-text"><b>I HAVE A SKILL</b><small>Offer your skills</small></span>
+          <span class="ac-arrow" style="background:#8B5CF6">→</span>
+        </button>
+      </div>
+
+      <form class="hero-search" id="hero-search">
+        <span class="hs-icon">🔍</span>
+        <input type="text" id="hs-q" placeholder="What task are you looking for?">
+        <select id="hs-category"><option value="">All Categories</option></select>
+        <select id="hs-time">
+          <option value="">Any Time</option>
+          <option value="15">≤ 15 min</option>
+          <option value="30">≤ 30 min</option>
+          <option value="60">≤ 1 hour</option>
+        </select>
+        <button class="btn btn-green" type="submit">Search</button>
+      </form>
+
+      <div class="time-chips">
+        <span class="tc-label">I have time</span>
+        <a class="chip chip-time" href="/tasks?maxDuration=5">5 min</a>
+        <a class="chip chip-time" href="/tasks?maxDuration=10">10 min</a>
+        <a class="chip chip-time" href="/tasks?maxDuration=15">15 min</a>
+        <a class="chip chip-time" href="/tasks?maxDuration=30">30 min</a>
+        <a class="chip chip-time" href="/tasks?maxDuration=60">1 hour</a>
+        <a class="chip chip-time" href="/tasks?maxDuration=120">2+ hours</a>
+      </div>
+
+      <div class="popular-now">
+        <span class="tc-label">Popular right now:</span>
+        <a href="/tasks?q=logo">#Logo Design</a>
+        <a href="/tasks?q=instagram">#Instagram Post</a>
+        <a href="/tasks?q=translate">#Translation</a>
+        <a href="/tasks?q=data entry">#Data Entry</a>
+        <a href="/tasks?q=video">#Video Editing</a>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <div class="hero-visual">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-greet">👋 Hi Rakib,<br><b>You earned ৳850 today!</b></div>
+            <div class="phone-task"><span class="pt-emoji">🎨</span><span>Logo Design<small>Completed · 30 min</small></span><b>+৳250</b></div>
+            <div class="phone-task"><span class="pt-emoji">🌍</span><span>Translation<small>Completed · 15 min</small></span><b>+৳120</b></div>
+            <div class="phone-task"><span class="pt-emoji">📊</span><span>Data Entry<small>In review · 30 min</small></span><b>+৳150</b></div>
+            <div class="phone-cash">💵 Cash out via bKash</div>
+          </div>
+        </div>
+        <div class="float-card fc-1"><span class="fc-icon" style="background:#DCFCE7">🎨</span><span><small>⏱ 30 min</small><b>Logo Design</b></span><span class="fc-price">৳250</span></div>
+        <div class="float-card fc-2"><span class="fc-icon" style="background:#FEE2E2">📸</span><span><small>⏱ 25 min</small><b>Instagram Post Design</b></span><span class="fc-price">৳200</span></div>
+        <div class="float-card fc-3"><span class="fc-icon" style="background:#DBEAFE">🌍</span><span><small>⏱ 15 min</small><b>Translate to English</b></span><span class="fc-price">৳120</span></div>
+        <div class="float-card fc-4"><span class="fc-icon" style="background:#D1FAE5">📊</span><span><small>⏱ 30 min</small><b>Data Entry (Excel)</b></span><span class="fc-price">৳150</span></div>
+        <div class="earnings-card">
+          <div class="ec-left"><small>Total Earnings</small><b>৳12,540</b><span>This Month</span></div>
+          <div class="ec-chart">📈</div>
+        </div>
+        <div class="trust-bar">
+          <div class="avatars-stack">
+            <span style="background:#F59E0B">RH</span><span style="background:#3B82F6">NJ</span><span style="background:#8B5CF6">AM</span><span style="background:#EC4899">SA</span>
+          </div>
+          <div class="tb-text"><b>4.8/5</b> <span class="tb-stars">★★★★★</span><small>Trusted by 50K+ users</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORIES SHOWCASE CAROUSEL ================= -->
+<section class="section cat-showcase-section" id="categories">
+  <div class="container">
+    <div class="section-head cat-section-head">
+      <div>
+        <div class="cat-badge-top">💼 38 Master Domains · 491+ Specialized Services</div>
+        <h2>Explore Top Categories</h2>
+        <p class="section-subtitle">Find fast-paying digital micro-jobs and verified local on-site services across Bangladesh.</p>
+      </div>
+
+      <!-- Carousel Navigation Buttons & Link -->
+      <div class="cat-nav-controls">
+        <div class="cat-carousel-nav-btns">
+          <button id="cat-carousel-prev" class="cat-carousel-btn" aria-label="Previous categories" title="Previous categories">‹</button>
+          <button id="cat-carousel-next" class="cat-carousel-btn" aria-label="Next categories" title="Next categories">›</button>
+        </div>
+        <a class="see-all-desktop" href="/tasks">Browse all tasks →</a>
+      </div>
+    </div>
+
+    <!-- Interactive Category Segment Tabs & Search Bar -->
+    <div class="cat-controls-bar">
+      <div class="cat-segment-tabs" id="cat-segment-tabs">
+        <button class="cat-seg-btn active" data-cat-filter="all">🌟 All Categories <span class="seg-pill">38</span></button>
+        <button class="cat-seg-btn" data-cat-filter="online">💻 Online &amp; Digital <span class="seg-pill">21</span></button>
+        <button class="cat-seg-btn" data-cat-filter="physical">📍 Physical &amp; Local <span class="seg-pill">17</span></button>
+        <button class="cat-seg-btn" data-cat-filter="trending">🔥 Popular</button>
+        <button class="cat-seg-btn" data-cat-filter="expert">🧠 Expert Services</button>
+      </div>
+
+      <div class="cat-home-search-wrap">
+        <input type="text" id="cat-search-home" placeholder="🔍 Search category or service (e.g. Logo, AC Repair, Voice Over)..." class="cat-home-search-input">
+        <button type="button" id="cat-search-clear" class="cat-search-clear-btn" style="display:none">✕</button>
+      </div>
+    </div>
+
+    <!-- Modern Single-Row Carousel Track (6 cards in a row) -->
+    <div class="cat-carousel-wrapper">
+      <div class="cat-carousel-track" id="cat-grid"></div>
+    </div>
+
+    <!-- Carousel Dots Pagination -->
+    <div class="cat-carousel-dots" id="cat-carousel-dots"></div>
+  </div>
+</section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="section section-soft" id="how-it-works">
+  <div class="container">
+    <h2>How XtraEarn Works</h2>
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <span class="step-icon">📋</span>
+          <h3>Post or Find a Task</h3>
+          <p>Post a task you need help with or find tasks you can do.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span class="step-icon">🤝</span>
+          <h3>Connect &amp; Accept</h3>
+          <p>The right person accepts the task and gets to work.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span class="step-icon">📨</span>
+          <h3>Submit &amp; Review</h3>
+          <p>Work is submitted and you review &amp; approve it.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <span class="step-icon">💰</span>
+          <h3>Get Paid</h3>
+          <p>Payment is released to your wallet. Everyone wins!</p>
+        </div>
+      </div>
+      <aside class="why-panel">
+        <h3>Why People Love XtraEarn</h3>
+        <ul>
+          <li><span class="ck">✔</span><span><b>Flexible:</b> Work on your own time</span></li>
+          <li><span class="ck">✔</span><span><b>Earn Extra:</b> Small tasks, real income</span></li>
+          <li><span class="ck">✔</span><span><b>Trusted:</b> Secure payments &amp; reviews</span></li>
+          <li><span class="ck">✔</span><span><b>Opportunities:</b> For everyone, everywhere</span></li>
+        </ul>
+        <div class="money-bag">🪙<span class="bag">💰</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PHYSICAL HELP ================= -->
+<section class="section" id="physical">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Need a helping hand nearby? 🤝</h2>
+        <p class="section-sub">Not every task is online. Hire someone in your area for shop visits, photos, price checks, events or physical help — or earn by helping others near you.</p>
+      </div>
+      <a class="see-all" href="/tasks?type=physical">All on-site tasks →</a>
+    </div>
+    <div class="feat-grid physical-grid" id="physical-grid"></div>
+    <div class="physical-cta">
+      <div>
+        <b>👕 You can help physically too</b>
+        <p>Know your neighborhood? Take photos, verify shops, run errands, support events — and get paid for being there.</p>
+      </div>
+      <div class="physical-cta-actions">
+        <a class="btn btn-green btn-lg" href="/tasks?type=physical">Find on-site work</a>
+        <button class="btn btn-outline btn-lg js-post-physical">Post on-site help</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 1-ON-1 EXPERT MARKETPLACE & CONSULTATIONS ================= -->
+<section class="section home-experts-section" id="experts">
+  <div class="container">
+    <!-- Header with Trust Badge and Switcher -->
+    <div class="home-exp-head">
+      <div>
+        <div class="home-exp-badge">
+          <span>🧠 Verified 1-on-1 Consultations</span>
+          <span class="badge-dot"></span>
+          <span>Instant Video &amp; Document Advisory</span>
+        </div>
+        <h2>Consult Top Doctors, Lawyers, Engineers &amp; Leaders</h2>
+        <p class="section-sub">Direct 1-on-1 video consultations, certified legal opinions, medical triages, structural vetting &amp; AI roadmaps — backed by BMDC, Supreme Court Bar &amp; IEB credentials.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-outline-light" onclick="openApplyExpertModal()" style="font-weight:700;padding:10px 18px;border-color:rgba(167,139,250,0.5);color:#C4B5FD">
+          🩺 Apply as Specialist
+        </button>
+        <a class="btn btn-purple" href="/tasks?category=expert-help" style="font-weight:700;padding:10px 20px">Browse All 30+ Specialists →</a>
+      </div>
+    </div>
+
+    <!-- Domain Highlights Showcase Cards -->
+    <div class="home-exp-domains-showcase" id="home-exp-domains-showcase">
+      <div class="home-domain-card" data-domain-target="Medical & Health">
+        <div class="home-domain-top">
+          <span class="home-domain-icon" style="background:#EF4444">🏥</span>
+          <span class="home-domain-cnt">6 Doctors</span>
+        </div>
+        <h4>Medical &amp; Health</h4>
+        <p>BMDC certified doctors · 15-min instant video clinical triage &amp; diagnostic review.</p>
+      </div>
+      <div class="home-domain-card" data-domain-target="Legal & Law">
+        <div class="home-domain-top">
+          <span class="home-domain-icon" style="background:#8B5CF6">⚖️</span>
+          <span class="home-domain-cnt">5 Advocates</span>
+        </div>
+        <h4>Legal &amp; Corporate Law</h4>
+        <p>Supreme Court Bar advocates · Formal written legal opinions, contracts &amp; writ advisory.</p>
+      </div>
+      <div class="home-domain-card" data-domain-target="Engineering & Architecture">
+        <div class="home-domain-top">
+          <span class="home-domain-icon" style="background:#F59E0B">🏗️</span>
+          <span class="home-domain-cnt">6 Engineers</span>
+        </div>
+        <h4>Engineering &amp; Architecture</h4>
+        <p>IEB chartered engineers · Structural vetting, RAJUK approvals &amp; solar/electrical design.</p>
+      </div>
+      <div class="home-domain-card" data-domain-target="Technology & AI">
+        <div class="home-domain-top">
+          <span class="home-domain-icon" style="background:#06B6D4">💻</span>
+          <span class="home-domain-cnt">4 Architects</span>
+        </div>
+        <h4>Technology &amp; AI</h4>
+        <p>Principal AI architects · Cloud infrastructure, LLM integrations &amp; cybersecurity.</p>
+      </div>
+    </div>
+
+    <!-- Dynamic Domain Filter Pills Toolbar -->
+    <div class="home-exp-toolbar">
+      <div class="home-exp-tabs-scroll" id="home-exp-domain-pills">
+        <button class="home-exp-pill active" data-exp-domain="all">
+          <span>🌟 All Disciplines</span> <span class="pill-cnt" id="hep-cnt-all">30</span>
+        </button>
+      </div>
+      <div class="home-exp-search-wrap">
+        <input type="text" id="home-exp-search" placeholder="🔍 Search doctor, lawyer, IEB engineer, specialty..." class="home-exp-search-input">
+      </div>
+    </div>
+
+    <!-- Live Verified Specialist Cards Grid -->
+    <div class="home-exp-cards-grid" id="expert-grid"></div>
+
+    <!-- Trust & Escrow Guarantee Footer Bar -->
+    <div class="home-exp-trust-bar">
+      <div class="hetb-item">
+        <span class="hetb-icon">🛡️</span>
+        <div>
+          <b>100% Escrow Protected</b>
+          <small>Payment held safely in escrow until your 1-on-1 consultation concludes</small>
+        </div>
+      </div>
+      <div class="hetb-item">
+        <span class="hetb-icon">📜</span>
+        <div>
+          <b>Regulatory License Verification</b>
+          <small>BMDC registered doctors, Supreme Court Bar advocates &amp; IEB engineers</small>
+        </div>
+      </div>
+      <div class="hetb-item">
+        <span class="hetb-icon">⚡</span>
+        <div>
+          <b>10–15 Min Response SLA</b>
+          <small>Fast video room links or formal written opinion delivered on schedule</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURED TASKS ================= -->
+<section class="section" id="featured">
+  <div class="container">
+    <div class="section-head">
+      <h2>Featured Tasks</h2>
+      <a class="see-all" href="/tasks">View all tasks →</a>
+    </div>
+    <div class="feat-grid" id="feat-grid"></div>
+  </div>
+</section>
+
+<!-- ================= FEATURED PROFESSIONALS & TALENT SPOTLIGHT ================= -->
+<section class="section pro-spotlight-section" id="pro-spotlight">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:18px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);color:#38BDF8;font-size:0.75rem;font-weight:800;padding:4px 12px;border-radius:20px;margin-bottom:8px">
+          <span>💎 TALENT SPOTLIGHT</span>
+          <span>·</span>
+          <span>Verified Elite Freelancers &amp; Masters</span>
+        </div>
+        <h2 style="color:#fff;margin:0">Featured Professionals &amp; Top Talent</h2>
+        <p style="color:#94A3B8;font-size:0.9rem;margin-top:4px">Hire vetted, top-rated Bangladeshi freelancers with proven track records, fast delivery SLA, and direct consultation booking.</p>
+      </div>
+      <div>
+        <button class="btn btn-green" onclick="openTalentSpotlightApplyModal()" style="font-weight:700">🚀 Apply for Spotlight</button>
+      </div>
+    </div>
+
+    <!-- Category Filter Pills for Talent Spotlight -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px" id="spotlight-cat-pills">
+      <button class="cat-seg-btn active" data-spotlight-cat="all">🌟 All Talents</button>
+      <button class="cat-seg-btn" data-spotlight-cat="Creative">🎨 Design &amp; Creative</button>
+      <button class="cat-seg-btn" data-spotlight-cat="Development">💻 Dev &amp; Tech</button>
+      <button class="cat-seg-btn" data-spotlight-cat="Writing">✍️ Writing &amp; Translation</button>
+      <button class="cat-seg-btn" data-spotlight-cat="Marketing">📈 Digital Marketing</button>
+    </div>
+
+    <!-- Live Spotlight Cards Grid -->
+    <div class="pro-spotlight-grid" id="home-spotlight-grid"></div>
+  </div>
+</section>
+
+<!-- ================= REFERRAL & GAMIFIED LOYALTY SHOWCASE ================= -->
+<section class="section" id="loyalty-referral" style="background:#0F172A;color:#fff;padding:56px 0;border-top:1px solid rgba(255,255,255,0.06)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch">
+      <!-- Left: Referral Card -->
+      <div class="referral-hub-card" style="margin-bottom:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <span style="font-size:1.8rem">🤝</span>
+          <span style="background:rgba(52,211,153,0.2);color:#34D399;font-size:0.75rem;font-weight:800;padding:4px 10px;border-radius:12px">GIVE ৳50, GET ৳100</span>
+        </div>
+        <h3 style="color:#fff;font-size:1.35rem;font-weight:800;margin-bottom:6px">Refer Friends &amp; Earn Cash Rewards</h3>
+        <p style="color:#94A3B8;font-size:0.86rem;line-height:1.5;margin-bottom:16px">Invite your friends to XtraEarn. When they sign up and complete their first task, you get <b>৳100 cash</b> in your wallet + <b>150 XP</b>!</p>
+        <div style="display:flex;gap:10px">
+          <a href="/wallet#referrals" class="btn btn-green" style="font-weight:700">Open Referral Hub →</a>
+          <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="openShareReferralModal()">📤 Instant Share</button>
+        </div>
+      </div>
+
+      <!-- Right: Loyalty & XP Card -->
+      <div class="loyalty-level-card" style="margin-bottom:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <span style="font-size:1.8rem">🏆</span>
+          <span class="streak-flame-badge" id="home-streak-badge">🔥 Daily Streak Check-in</span>
+        </div>
+        <h3 style="color:#fff;font-size:1.35rem;font-weight:800;margin-bottom:6px">Level Up &amp; Unlock 0% Fee Perks</h3>
+        <p style="color:#C7D2FE;font-size:0.86rem;line-height:1.5;margin-bottom:16px">Earn XP on every task completed, 5-star review, and daily check-in. Progress through 6 VIP Tiers (Bronze to Grandmaster) and save up to <b>25% on platform fees</b>!</p>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-purple" style="font-weight:700" onclick="handleDailyCheckinClick()">🔥 Check-in Today (+25 XP)</button>
+          <a href="/wallet#loyalty" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff">🎁 Rewards Shop</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TRUST BADGES ================= -->
+<section class="section no-top" id="trust-badges">
+  <div class="container">
+    <div class="badges">
+      <div class="badge"><span class="badge-icon" style="background:#DCFCE7">🔒</span><div><b>Secure Payments</b><small>100% secure escrow system</small></div></div>
+      <div class="badge"><span class="badge-icon" style="background:#DBEAFE">✅</span><div><b>Verified Users</b><small>Trusted professionals &amp; workers</small></div></div>
+      <div class="badge"><span class="badge-icon" style="background:#DCFCE7">🎧</span><div><b>24/7 Support</b><small>We're here to help anytime</small></div></div>
+      <div class="badge"><span class="badge-icon" style="background:#F3E8FF">💸</span><div><b>Low Platform Fee</b><small>More earning for you</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOP EARNERS ================= -->
+<section class="section no-top" id="earners">
+  <div class="container">
+    <div class="section-head">
+      <h2>Top Earners This Month</h2>
+      <a class="see-all" href="/tasks">View leaderboard →</a>
+    </div>
+    <div class="earner-grid" id="earner-grid"></div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section class="section no-top" id="testimonials">
+  <div class="container">
+    <h2>What Our Users Say</h2>
+    <div class="testi-grid" id="testi-grid"></div>
+    <div class="dots" id="testi-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="section no-top" id="cta">
+  <div class="container">
+    <div class="cta-banner">
+      <div class="cta-coins left">🪙<span>🪙</span></div>
+      <div class="cta-text">
+        <h2>Ready to turn your time into income?</h2>
+        <p>Join thousands of people who are earning with XtraEarn every day.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn btn-green btn-lg" id="cta-start">Get Started for Free</button>
+        <a class="btn btn-white btn-lg" href="/tasks">I Want to Earn</a>
+      </div>
+      <div class="cta-coins right">🪙<span>🪙</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="f-brand">
+      <a class="logo" href="/">
+        <span class="logo-x">X</span>
+        <span class="logo-text">Xtra<b>Earn</b></span>
+      </a>
+      <p>A platform where people turn their spare time, skills and expertise into extra income.</p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>For Users</h4>
+      <a href="/tasks">Find Tasks</a>
+      <a href="/tasks">I Want to Earn</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">My Wallet</a>
+    </div>
+    <div class="f-col">
+      <h4>For Businesses</h4>
+      <a href="#" class="js-need-help">Post a Task</a>
+      <a href="/#how-it-works">Why XtraEarn</a>
+      <a href="/#experts">Verified Experts</a>
+      <a href="/#physical">On-Site Help</a>
+      <a href="/#cta">Pricing &amp; Solutions</a>
+    </div>
+    <div class="f-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Blog</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQs</a>
+      <a href="#">Safety Center</a>
+      <a href="#">Community</a>
+    </div>
+    <div class="f-col f-app">
+      <h4>Download Our App</h4>
+      <a class="store-badge" href="#">▶<span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="#"><span class="apple"></span><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 XtraEarn. All rights reserved.</span>
+    <span class="fb-right">
+      <span class="lang-switch dark">🌐 English ▾</span>
+      <span class="lang-switch dark">BDT (৳) ▾</span>
+    </span>
+  </div>
+</footer>
+
+<!-- ================= PUBLIC MODAL: EXPERT DOSSIER ================= -->
+<div class="modal-overlay" id="modal-public-expert-dossier" onclick="if(event.target===this)closeModal('modal-public-expert-dossier')">
+  <div class="modal modal-wide" style="max-width:780px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="pub-exp-avatar" style="width:48px;height:48px;border-radius:12px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800">
+          🧠
+        </div>
+        <div>
+          <h3 id="pub-exp-name" style="margin:0;color:#fff;font-size:1.15rem;font-weight:800">Verified Specialist</h3>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:2px">
+            <span id="pub-exp-badge" class="vbadge" style="background:rgba(59,130,246,0.2);color:#93C5FD;border-color:rgba(59,130,246,0.4)">Verified Specialist</span>
+            <span id="pub-exp-district" style="color:#94A3B8;font-size:0.78rem">Dhaka, Bangladesh</span>
+          </div>
+        </div>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-public-expert-dossier')">✕</button>
+    </div>
+
+    <!-- Dossier Body -->
+    <div style="padding:22px 24px;max-height:75vh;overflow-y:auto">
+      <div id="pub-exp-title" style="font-size:0.95rem;font-weight:700;color:#E2E8F0;margin-bottom:6px">Consultant Specialist</div>
+      <p id="pub-exp-bio" style="color:#94A3B8;font-size:0.86rem;line-height:1.55;margin:0 0 16px"></p>
+
+      <!-- Key Metas -->
+      <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;background:#1E293B;padding:14px;border-radius:12px;margin-bottom:18px">
+        <div>
+          <div style="font-size:0.68rem;color:#94A3B8;text-transform:uppercase">Rating</div>
+          <div id="pub-exp-rating" style="font-size:0.92rem;font-weight:800;color:#FBBF24">⭐ 4.98</div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;color:#94A3B8;text-transform:uppercase">Sessions</div>
+          <div id="pub-exp-sessions" style="font-size:0.92rem;font-weight:800;color:#fff">120+ Done</div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;color:#94A3B8;text-transform:uppercase">Response SLA</div>
+          <div id="pub-exp-response" style="font-size:0.92rem;font-weight:800;color:#10B981">⚡ 10 mins</div>
+        </div>
+        <div>
+          <div style="font-size:0.68rem;color:#94A3B8;text-transform:uppercase">Experience</div>
+          <div id="pub-exp-exp" style="font-size:0.92rem;font-weight:800;color:#A78BFA">10+ Years</div>
+        </div>
+      </div>
+
+      <!-- Credentials & License -->
+      <div style="background:#111827;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:0.76rem;font-weight:700;color:#A78BFA;text-transform:uppercase;margin-bottom:6px">🛡️ Regulatory Accreditation &amp; Academic Degrees</div>
+        <div id="pub-exp-license" style="font-size:0.86rem;color:#E2E8F0;margin-bottom:4px;font-family:monospace"></div>
+        <div id="pub-exp-edu" style="font-size:0.82rem;color:#94A3B8"></div>
+      </div>
+
+      <!-- Consultation Packages List -->
+      <div style="font-size:0.76rem;font-weight:700;color:#A78BFA;text-transform:uppercase;margin-bottom:10px">💰 Available 1-on-1 Consultation Packages</div>
+      <div id="pub-exp-packages-list" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px"></div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-public-expert-dossier')">Close</button>
+        <button class="btn btn-purple" id="btn-pub-book-from-dossier" style="font-weight:700">📅 Book 1-on-1 Consultation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: BOOK 1-ON-1 CONSULTATION ================= -->
+<div class="modal-overlay" id="modal-public-book-consult" onclick="if(event.target===this)closeModal('modal-public-book-consult')">
+  <div class="modal modal-wide" style="max-width:680px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,0.08)">
+      <div>
+        <h3 style="margin:0;color:#fff;font-size:1.15rem;font-weight:800">📅 Book 1-on-1 Expert Consultation</h3>
+        <p id="book-consult-sub" style="margin:3px 0 0;color:#94A3B8;font-size:0.8rem">Direct live video/audio advisory session with escrow protection.</p>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-public-book-consult')">✕</button>
+    </div>
+
+    <form id="form-public-book-consult" onsubmit="handlePublicConsultBookingSubmit(event)" style="padding:22px 24px;max-height:75vh;overflow-y:auto">
+      <input type="hidden" id="book-expert-id" value="">
+      <input type="hidden" id="book-selected-tier" value="quick_advice">
+
+      <!-- Step 1: Tier Selection -->
+      <div style="font-size:0.78rem;font-weight:700;color:#A78BFA;text-transform:uppercase;margin-bottom:8px">1. Select Consultation Package Tier *</div>
+      <div id="book-tier-selector" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px"></div>
+
+      <!-- Step 2: Schedule & Mode -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+        <label style="color:#E2E8F0">
+          Preferred Date *
+          <input type="date" id="book-date" required style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+        </label>
+        <label style="color:#E2E8F0">
+          Preferred Time Slot *
+          <select id="book-time" required style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+            <option value="11:00 AM">11:00 AM (Morning)</option>
+            <option value="03:00 PM">03:00 PM (Afternoon)</option>
+            <option value="05:30 PM" selected>05:30 PM (Evening)</option>
+            <option value="08:00 PM">08:00 PM (Night)</option>
+            <option value="09:30 PM">09:30 PM (Late Night)</option>
+          </select>
+        </label>
+        <label style="color:#E2E8F0">
+          Communication Mode *
+          <select id="book-mode" required style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+            <option value="video_call">📹 Live Video Call</option>
+            <option value="audio_call">📞 Voice Call</option>
+            <option value="written_opinion">📄 Written Opinion</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Step 3: Client Details -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+        <label style="color:#E2E8F0">
+          Your Name *
+          <input type="text" id="book-client-name" required placeholder="e.g. Tanvir Rahman" style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+        </label>
+        <label style="color:#E2E8F0">
+          Email Address *
+          <input type="email" id="book-client-email" required placeholder="name@domain.com" style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+        </label>
+        <label style="color:#E2E8F0">
+          Phone Number *
+          <input type="tel" id="book-client-phone" required placeholder="017xxxxxxxx" style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px">
+        </label>
+      </div>
+
+      <!-- Step 4: Consultation Query / Notes -->
+      <label style="color:#E2E8F0;margin-bottom:16px">
+        Brief Description of Consultation Topic / Case Details *
+        <textarea id="book-notes" rows="3" required placeholder="Describe your legal case, health symptom, structural blueprint, or technology architecture requirement..." style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px;width:100%"></textarea>
+      </label>
+
+      <!-- Escrow Protection Guarantee Banner -->
+      <div style="background:#111827;border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">🛡️</span>
+          <div>
+            <b style="color:#10B981;font-size:0.85rem">XtraEarn Escrow Protected</b>
+            <div style="color:#94A3B8;font-size:0.76rem">Fee is held safely in escrow until the session is completed satisfactorily.</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.72rem;color:#94A3B8">Total Fee</div>
+          <div id="book-fee-display" style="font-size:1.15rem;font-weight:800;color:#FBBF24">৳1,200</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button type="button" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-public-book-consult')">Cancel</button>
+        <button type="submit" class="btn btn-purple" style="font-weight:800;padding:10px 24px">🔒 Confirm &amp; Secure Consultation Slot</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: CONSULTATION CONFIRMED ================= -->
+<div class="modal-overlay" id="modal-consult-confirmed" onclick="if(event.target===this)closeModal('modal-consult-confirmed')">
+  <div class="modal" style="max-width:520px;background:#0B132B;color:#fff;border:1px solid rgba(16,185,129,0.3);border-radius:20px;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,0.8);text-align:center">
+    <div style="width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,0.15);border:2px solid #10B981;color:#10B981;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 16px">
+      ✓
+    </div>
+    <span style="background:rgba(16,185,129,0.2);color:#34D399;font-weight:800;font-size:0.75rem;padding:4px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em">
+      100% Escrow Protected
+    </span>
+    <h3 style="font-size:1.4rem;font-weight:800;color:#fff;margin:12px 0 6px">Consultation Booked Successfully!</h3>
+    <p style="color:#94A3B8;font-size:0.88rem;margin:0 0 20px">Your appointment has been registered on the XtraEarn network.</p>
+
+    <div style="background:#1E293B;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;text-align:left;margin-bottom:22px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <span style="color:#94A3B8;font-size:0.8rem">Booking Reference:</span>
+        <b id="conf-booking-code" style="color:#A78BFA;font-family:monospace;font-size:1rem">CNS-XXXX</b>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="color:#94A3B8;font-size:0.8rem">Specialist:</span>
+        <b id="conf-expert-name" style="color:#fff;font-size:0.88rem">--</b>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="color:#94A3B8;font-size:0.8rem">Scheduled Slot:</span>
+        <span id="conf-scheduled-slot" style="color:#FBBF24;font-weight:700;font-size:0.86rem">--</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#94A3B8;font-size:0.8rem">Escrow Fee:</span>
+        <b id="conf-fee" style="color:#10B981;font-size:0.92rem">--</b>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <a id="conf-btn-room" href="#" target="_blank" class="btn btn-green" style="font-weight:800;padding:12px 20px;justify-content:center;text-decoration:none">
+        🎥 Enter Consultation Room Now
+      </a>
+      <div style="display:flex;gap:10px">
+        <a href="/profile?tab=consultations" class="btn btn-purple" style="flex:1;font-weight:700;padding:10px;justify-content:center;text-decoration:none">
+          📅 My Consultations
+        </a>
+        <button type="button" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-consult-confirmed')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: CAMPAIGN DEALS ================= -->
+<div class="modal-overlay" id="modal-public-campaign-deal" onclick="if(event.target===this)closeModal('modal-public-campaign-deal')">
+  <div class="modal" style="max-width:540px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.6rem">🎉</span>
+        <div>
+          <h3 id="modal-camp-title" style="color:#fff;margin:0;font-size:1.15rem;font-weight:800">Special Promo Deal</h3>
+          <small id="modal-camp-channel" style="color:#A78BFA;font-weight:700">LIMITED TIME OFFER</small>
+        </div>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-public-campaign-deal')">✕</button>
+    </div>
+    <p id="modal-camp-desc" style="color:#94A3B8;font-size:0.88rem;line-height:1.5;margin-bottom:16px">Claim this promotional offer to receive instant bonus XP and platform fee vouchers.</p>
+    
+    <div style="background:#1E293B;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:0.75rem;color:#94A3B8;text-transform:uppercase">Bonus Reward</div>
+        <div id="modal-camp-bonus" style="color:#FBBF24;font-size:1.2rem;font-weight:800">+200 XP &amp; 100 Points</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:0.75rem;color:#94A3B8;text-transform:uppercase">Fee Discount</div>
+        <div id="modal-camp-discount" style="color:#10B981;font-size:1.2rem;font-weight:800">15% OFF</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff;flex:1" onclick="closeModal('modal-public-campaign-deal')">Close</button>
+      <button class="btn btn-green" id="btn-modal-claim-offer" style="flex:2;font-weight:800" onclick="executeClaimActiveCampaign()">⚡ Claim Offer Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: SHARE REFERRAL ================= -->
+<div class="modal-overlay" id="modal-public-share-referral" onclick="if(event.target===this)closeModal('modal-public-share-referral')">
+  <div class="modal" style="max-width:540px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:1.6rem">🤝</span>
+        <div>
+          <h3 style="color:#fff;margin:0;font-size:1.15rem;font-weight:800">Invite Friends &amp; Earn ৳100</h3>
+          <small style="color:#34D399;font-weight:700">UNLIMITED REFERRAL BONUSES</small>
+        </div>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-public-share-referral')">✕</button>
+    </div>
+    <p style="color:#94A3B8;font-size:0.86rem;line-height:1.5;margin-bottom:14px">Share your personal referral link with freelancers and clients. You get <b>৳100 cash</b> when they complete their first task!</p>
+
+    <div class="ref-link-box" style="margin-bottom:14px">
+      <input type="text" id="modal-ref-link-input" class="ref-link-input" readonly value="http://localhost:3000/?ref=JOINNOW">
+      <button class="btn btn-green" style="padding:6px 12px;font-size:0.8rem;border-radius:6px" onclick="copyModalReferralLink()">📋 Copy Link</button>
+    </div>
+
+    <div style="font-size:0.78rem;color:#94A3B8;font-weight:700;text-transform:uppercase;margin-bottom:8px">1-Click Share:</div>
+    <div class="ref-social-share" style="margin-bottom:18px">
+      <button class="ref-share-btn btn-share-whatsapp" onclick="shareReferralVia('whatsapp')">💬 WhatsApp</button>
+      <button class="ref-share-btn btn-share-telegram" onclick="shareReferralVia('telegram')">✈️ Telegram</button>
+      <button class="ref-share-btn btn-share-facebook" onclick="shareReferralVia('facebook')">👥 Facebook</button>
+      <button class="ref-share-btn btn-share-email" onclick="shareReferralVia('email')">✉️ Email</button>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-public-share-referral')">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: DAILY STREAK CELEBRATION ================= -->
+<div class="modal-overlay" id="modal-public-daily-streak" onclick="if(event.target===this)closeModal('modal-public-daily-streak')">
+  <div class="modal" style="max-width:440px;background:#0F172A;color:#fff;border:1px solid rgba(239,68,68,0.4);border-radius:18px;padding:28px;text-align:center">
+    <div style="font-size:3rem;margin-bottom:8px">🔥</div>
+    <h3 id="modal-streak-title" style="color:#fff;font-size:1.35rem;font-weight:800;margin:0 0 6px">Streak Check-in!</h3>
+    <p id="modal-streak-msg" style="color:#94A3B8;font-size:0.88rem;margin-bottom:18px">You have successfully checked in today. Keep your daily streak going for multiplier bonuses!</p>
+
+    <div style="background:#1E293B;border-radius:12px;padding:14px;margin-bottom:20px;display:flex;justify-content:space-around">
+      <div>
+        <div style="font-size:0.72rem;color:#94A3B8;text-transform:uppercase">Streak</div>
+        <div id="modal-streak-days" style="color:#EF4444;font-size:1.3rem;font-weight:800">Day 1 🔥</div>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;color:#94A3B8;text-transform:uppercase">XP Awarded</div>
+        <div id="modal-streak-xp" style="color:#FBBF24;font-size:1.3rem;font-weight:800">+25 XP</div>
+      </div>
+      <div>
+        <div style="font-size:0.72rem;color:#94A3B8;text-transform:uppercase">Points</div>
+        <div id="modal-streak-pts" style="color:#10B981;font-size:1.3rem;font-weight:800">+25 Pts</div>
+      </div>
+    </div>
+
+    <button class="btn btn-green btn-block" style="font-weight:800;padding:12px" onclick="closeModal('modal-public-daily-streak')">Awesome, Keep It Up! 🚀</button>
+  </div>
+</div>
+
+<!-- ================= PUBLIC MODAL: TALENT SPOTLIGHT APPLY ================= -->
+<div class="modal-overlay" id="modal-talent-spotlight-apply" onclick="if(event.target===this)closeModal('modal-talent-spotlight-apply')">
+  <div class="modal modal-wide" style="max-width:680px;background:#0F172A;color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:24px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div>
+        <h3 style="color:#fff;margin:0;font-size:1.15rem;font-weight:800">🚀 Apply for Talent Spotlight</h3>
+        <p style="color:#94A3B8;font-size:0.8rem;margin:3px 0 0">Boost your freelancer visibility by up to 480% with priority placement and verified badge.</p>
+      </div>
+      <button class="modal-x" style="color:#94A3B8;position:static" onclick="closeModal('modal-talent-spotlight-apply')">✕</button>
+    </div>
+
+    <form id="form-spotlight-apply" onsubmit="handleSpotlightApplicationSubmit(event)">
+      <div style="font-size:0.78rem;color:#A78BFA;font-weight:700;text-transform:uppercase;margin-bottom:8px">1. Select Spotlight Tier *</div>
+      <div id="spotlight-tiers-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <label style="color:#E2E8F0">
+          Primary Category *
+          <select id="spotlight-cat-select" required style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px;width:100%">
+            <option value="Creative & Design">Creative &amp; Design</option>
+            <option value="Development & IT">Development &amp; IT</option>
+            <option value="Writing & Translation">Writing &amp; Translation</option>
+            <option value="Digital Marketing">Digital Marketing</option>
+            <option value="Video & Animation">Video &amp; Animation</option>
+          </select>
+        </label>
+        <label style="color:#E2E8F0">
+          Primary Skill / Specialty *
+          <input type="text" id="spotlight-skill-input" required placeholder="e.g. Brand Identity Designer" style="background:#1E293B;border:1px solid rgba(255,255,255,0.1);color:#fff;border-radius:8px;padding:9px 12px;width:100%">
+        </label>
+      </div>
+
+      <div style="background:#111827;border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:1.4rem">💎</span>
+          <div>
+            <b style="color:#FBBF24;font-size:0.85rem">Instant Profile Promotion</b>
+            <div style="color:#94A3B8;font-size:0.76rem">Fee is deducted safely from your wallet balance.</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:0.72rem;color:#94A3B8">Spotlight Fee</div>
+          <div id="spotlight-fee-display" style="font-size:1.15rem;font-weight:800;color:#FBBF24">৳300</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button type="button" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-talent-spotlight-apply')">Cancel</button>
+        <button type="submit" class="btn btn-green" style="font-weight:800;padding:10px 24px">💎 Confirm &amp; Boost My Profile</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Apply as Expert Specialist / Doctor -->
+<div class="modal-backdrop" id="modal-apply-expert" style="display:none;z-index:999999">
+  <div class="modal-box" style="max-width:680px;background:#0F172A;border:1px solid rgba(167,139,250,0.3);color:#fff;border-radius:18px;padding:26px;box-shadow:0 25px 60px rgba(0,0,0,0.85);max-height:92vh;overflow-y:auto">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:14px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(139,92,246,0.18);color:#C4B5FD;font-size:0.75rem;font-weight:700;padding:3px 10px;border-radius:99px;margin-bottom:6px">
+          🩺 Verified Specialist Onboarding
+        </div>
+        <h3 style="margin:0;font-size:1.35rem;font-weight:800;color:#fff">Apply to Join as a Verified Expert</h3>
+        <p style="margin:4px 0 0;font-size:0.82rem;color:#94A3B8">Doctors, Supreme Court Advocates, Chartered Engineers, FCA Accountants, and Industry Leaders are invited to offer 1-on-1 consultations.</p>
+      </div>
+      <button type="button" class="btn-close" style="background:none;border:none;color:#94A3B8;font-size:1.6rem;cursor:pointer;line-height:1" onclick="closeModal('modal-apply-expert')">&times;</button>
+    </div>
+
+    <form id="form-apply-expert" onsubmit="handleApplyExpertSubmit(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Full Name &amp; Suffixes *</label>
+          <input type="text" id="app-exp-name" required placeholder="e.g. Dr. Tanvir Rahman (MBBS, FCPS)" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Professional Domain *</label>
+          <select id="app-exp-domain" required style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+            <option value="Medical & Health">🏥 Medical &amp; Health (Doctors / Physicians)</option>
+            <option value="Legal & Law">⚖️ Legal &amp; Law (Barristers / Advocates)</option>
+            <option value="Engineering & Architecture">🏗️ Engineering &amp; Architecture (Chartered Engr / Architects)</option>
+            <option value="Finance & Tax">💼 Finance &amp; Tax (FCA / CFA / Tax Consultants)</option>
+            <option value="Technology & AI">💻 Technology &amp; AI (Cloud Architects / Engineers)</option>
+            <option value="Marketing & Growth">📣 Marketing &amp; Growth (Fractional CMOs / Strategists)</option>
+            <option value="Education & Career">🧑‍🏫 Education &amp; Career (IELTS / Higher Studies)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Professional Title / Specialization *</label>
+          <input type="text" id="app-exp-title" required placeholder="e.g. Consultant Dermatologist / High Court Advocate" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Registration / License Number *</label>
+          <input type="text" id="app-exp-license" required placeholder="e.g. BMDC Reg: A-84920 / Bar Reg: 4812 / IEB: M-9102" style="background:#1E293B;border:1px solid rgba(139,92,246,0.35);color:#A78BFA;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem;font-weight:700">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Contact Email *</label>
+          <input type="email" id="app-exp-email" required placeholder="doctor@example.com" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Contact Phone *</label>
+          <input type="tel" id="app-exp-phone" required placeholder="+880 1711-XXXXXX" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px">
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Years Experience</label>
+          <input type="number" id="app-exp-experience" min="1" max="50" value="5" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">District / Location</label>
+          <input type="text" id="app-exp-district" value="Dhaka" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Hourly Rate (৳)</label>
+          <input type="number" id="app-exp-rate" min="300" max="50000" step="100" value="1500" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+        </div>
+      </div>
+
+      <div style="margin-bottom:14px">
+        <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Degrees &amp; Institutions</label>
+        <input type="text" id="app-exp-education" placeholder="e.g. MBBS (Dhaka Medical College), FCPS (Surgery, BCPS)" style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem">
+      </div>
+
+      <div style="margin-bottom:18px">
+        <label style="font-size:0.8rem;font-weight:700;color:#CBD5E1;display:block;margin-bottom:5px">Short Professional Bio &amp; Areas of Practice</label>
+        <textarea id="app-exp-bio" rows="3" placeholder="Briefly describe your specialization, clinical or industry experience, and consultation focus..." style="background:#1E293B;border:1px solid rgba(255,255,255,0.12);color:#fff;border-radius:8px;padding:9px 12px;width:100%;font-size:0.88rem;resize:vertical"></textarea>
+      </div>
+
+      <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:12px 14px;margin-bottom:18px;display:flex;align-items:center;gap:12px">
+        <span style="font-size:1.5rem">🛡️</span>
+        <div style="font-size:0.78rem;color:#C4B5FD">
+          <b>Verification Guarantee:</b> Our compliance team manually verifies BMDC, Bar Council, or IEB credentials. Once verified, your public specialist card will appear on the homepage and you can host live consultations with escrow payouts.
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button type="button" class="btn btn-outline" style="border-color:rgba(255,255,255,0.2);color:#fff" onclick="closeModal('modal-apply-expert')">Cancel</button>
+        <button type="submit" id="btn-submit-apply-exp" class="btn btn-purple" style="font-weight:800;padding:10px 24px">
+          🚀 Submit Application for Review
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/countries.js"></script>
+<script src="/js/taskPostingEngine.js?v=8.9"></script>
+<script src="/js/shared.js?v=10.0"></script>
+<script src="/js/app.js?v=10.1"></script>
+</body>
+</html>

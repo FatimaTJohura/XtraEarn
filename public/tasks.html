@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Tasks — XtraEarn</title>
+  <meta name="description" content="Browse hundreds of micro tasks on XtraEarn. Filter by category, time and budget.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2316A34A'/><text x='50' y='72' font-size='64' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>X</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css?v=10.0">
+  <script>
+    window.toggleMobileNav = function(e) {
+      if (e) {
+        if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        if (typeof e.preventDefault === 'function') e.preventDefault();
+      }
+      var nav = document.getElementById('main-nav');
+      var btn = document.getElementById('nav-toggle');
+      if (!nav) return;
+      var isOpen = nav.classList.toggle('open');
+      if (btn) {
+        btn.textContent = isOpen ? '✕' : '☰';
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    };
+  </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">
+      <span class="logo-x">X</span>
+      <span class="logo-text">Xtra<b>Earn</b></span>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="/tasks">Find Tasks</a>
+      <a href="/#categories">Categories</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">Wallet</a>
+    </nav>
+    <div class="header-right">
+      <button class="lang-switch">🌐 EN <span class="caret">▾</span></button>
+      <div class="header-auth" id="header-auth"></div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu" onclick="toggleMobileNav(event)">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-head">
+  <div class="container">
+    <h1 id="page-title">Find Tasks</h1>
+    <p id="page-sub">Browse open micro tasks and apply in one click. Payment is held in escrow until you approve the work.</p>
+  </div>
+</section>
+
+<main class="container tasks-layout">
+  <div class="filter-mobile-toggle-wrap">
+    <button class="filter-toggle-btn" id="btn-toggle-filters" type="button">
+      <span>🎛️ Filters &amp; Categories</span>
+      <span class="filter-toggle-caret">▾ Show</span>
+    </button>
+  </div>
+  <aside class="filters" id="tasks-filters">
+    <div class="filter-sidebar-head">
+      <h3><span>🎛️</span> Filters</h3>
+      <a href="#" id="btn-reset-filters-sidebar" class="filter-reset-link">Reset All</a>
+    </div>
+
+    <!-- Work Type -->
+    <div class="filter-group">
+      <h4>Work Type</h4>
+      <div class="filter-list" id="filter-type">
+        <a href="#" data-type="" class="active">All work types</a>
+        <a href="#" data-type="online">💻 Online tasks</a>
+        <a href="#" data-type="physical">📍 Physical / on-site</a>
+        <a href="#" data-type="hybrid">🔄 Hybrid tasks</a>
+      </div>
+    </div>
+
+    <!-- District & Area Location Filter -->
+    <div class="filter-group filter-card-location">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <h4 style="margin:0">📍 District &amp; Area</h4>
+        <span style="background:#DCFCE7;color:#15803D;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:0.02em">LOCAL FILTER</span>
+      </div>
+      <div class="filter-list" id="filter-district">
+        <a href="#" data-district="" class="active">All Bangladesh</a>
+        <a href="#" data-district="Dhaka">Dhaka <small>12+ areas</small></a>
+        <a href="#" data-district="Chattogram">Chattogram <small>GEC, Agrabad</small></a>
+        <a href="#" data-district="Sylhet">Sylhet <small>Zindabazar</small></a>
+        <a href="#" data-district="Rajshahi">Rajshahi <small>Shaheb Bazar</small></a>
+        <a href="#" data-district="Khulna">Khulna <small>Shibbari</small></a>
+      </div>
+      <!-- Dynamic Area Selector -->
+      <div id="filter-area-container" style="margin-top:10px;display:none">
+        <label style="font-size:0.75rem;font-weight:700;color:#166534;text-transform:uppercase;display:block;margin-bottom:4px">Select Specific Area:</label>
+        <select id="select-area-filter" class="form-control" style="width:100%;padding:7px 10px;font-size:0.82rem;border:1.5px solid #86EFAC;border-radius:8px;outline:none;background:#fff;color:#0F172A;font-weight:600">
+          <option value="">All Areas in District</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 🌐 Online & Digital Categories -->
+    <div class="filter-group filter-card-online">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h4 style="margin:0">💻 Online Categories</h4>
+        <span style="background:#DBEAFE;color:#1D4ED8;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:0.02em">ONLINE ONLY</span>
+      </div>
+      <input type="text" id="cat-online-search-box" placeholder="🔍 Search online categories..."
+        style="width:100%;box-sizing:border-box;padding:7px 10px;font-size:0.8rem;border:1.5px solid #93C5FD;border-radius:8px;margin-bottom:8px;outline:none;background:#fff">
+      <div class="filter-list" id="filter-online-cats" style="max-height:220px;overflow-y:auto;padding-right:4px"></div>
+    </div>
+
+    <!-- 📍 Physical & Local Categories -->
+    <div class="filter-group filter-card-physical">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h4 style="margin:0">📍 Physical / On-site</h4>
+        <span style="background:#FFEDD5;color:#C2410C;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:0.02em">LOCAL SERVICE</span>
+      </div>
+      <input type="text" id="cat-physical-search-box" placeholder="🔍 Search physical services..."
+        style="width:100%;box-sizing:border-box;padding:7px 10px;font-size:0.8rem;border:1.5px solid #FDBA74;border-radius:8px;margin-bottom:8px;outline:none;background:#fff">
+      <div class="filter-list" id="filter-physical-cats" style="max-height:220px;overflow-y:auto;padding-right:4px"></div>
+    </div>
+
+    <!-- Active Subcategories Dropdown/List when a category is selected -->
+    <div class="filter-group filter-card-subcats" id="group-subcats" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h4 style="margin:0">Subcategories</h4>
+        <span style="background:#F3E8FF;color:#7E22CE;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:0.02em">SPECIALIZED</span>
+      </div>
+      <div class="filter-list" id="filter-subcats" style="max-height:200px;overflow-y:auto"></div>
+    </div>
+
+    <!-- Urgency Level -->
+    <div class="filter-group">
+      <h4>🔥 Urgency</h4>
+      <div class="filter-list" id="filter-urgency">
+        <a href="#" data-urgency="" class="active">Any Urgency</a>
+        <a href="#" data-urgency="instant">⚡ Instant / Need Now (≤ 15m)</a>
+        <a href="#" data-urgency="same_day">🚀 Same Day (≤ 24h)</a>
+      </div>
+    </div>
+
+    <!-- 🔥 Featured & Sponsored Bounties -->
+    <div class="filter-group" style="background:#FFFBEB;border:1px solid #FCD34D;border-radius:12px;padding:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <h4 style="margin:0;color:#92400E">🔥 Boosted Tasks</h4>
+        <span style="background:#FEF3C7;color:#D97706;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:800">HOT</span>
+      </div>
+      <div class="filter-list" id="filter-featured">
+        <a href="#" data-featured="" class="active">All Tasks</a>
+        <a href="#" data-featured="1">⭐ Featured Only (High Pay)</a>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="filter-group">
+      <h4>Budget</h4>
+      <div class="filter-list" id="filter-budget">
+        <a href="#" data-budget="20-100">৳20 – ৳100</a>
+        <a href="#" data-budget="100-300">৳100 – ৳300</a>
+        <a href="#" data-budget="300-500">৳300 – ৳500</a>
+        <a href="#" data-budget="500-">৳500+ (Expert)</a>
+      </div>
+    </div>
+
+    <!-- Sort by (Highest Budget / Top Price by default) -->
+    <div class="filter-group">
+      <h4>Sort by</h4>
+      <div class="filter-list" id="filter-sort">
+        <a href="#" data-sort="budget_high" class="active">💰 Highest budget (Top price)</a>
+        <a href="#" data-sort="newest">🕒 Newest first</a>
+        <a href="#" data-sort="budget_low">📉 Lowest budget</a>
+        <a href="#" data-sort="rating">⭐ Top rated</a>
+        <a href="#" data-sort="duration">⚡ Fastest to finish</a>
+      </div>
+    </div>
+
+    <!-- Quick Jobs Collection (At the very bottom of sidebar) -->
+    <div class="filter-group filter-card-quick">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <h4 style="color:#0F172A;margin:0">⚡ Quick Jobs</h4>
+        <span style="background:#E2E8F0;color:#334155;font-size:0.68rem;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:0.02em">EXPRESS</span>
+      </div>
+      <div class="filter-list" id="filter-quick">
+        <a href="#" data-quick="" class="active">All durations</a>
+        <a href="#" data-quick="under-5m">⚡ Under 5 min <small>Micro-action</small></a>
+        <a href="#" data-quick="under-10m">⏱️ Under 10 min <small>Fast task</small></a>
+        <a href="#" data-quick="under-15m">⏳ Under 15 min <small>Short job</small></a>
+        <a href="#" data-quick="under-30m">🕒 Under 30 min <small>Express</small></a>
+        <a href="#" data-quick="under-1h">📅 Under 1 hour <small>Standard</small></a>
+      </div>
+    </div>
+
+    <button class="btn btn-green" id="btn-post-side" style="width:100%;margin-top:10px">+ Post a Task</button>
+  </aside>
+
+  <section>
+    <!-- Top Horizontal Quick Filter Pills -->
+    <div class="task-quick-pills" id="task-quick-pills">
+      <button class="quick-pill active" data-pill-sort="budget_high">💰 Highest Budget (Top Price)</button>
+      <button class="quick-pill" data-pill-type="">All Tasks <span class="pill-badge" id="badge-all-count">43</span></button>
+      <button class="quick-pill" data-pill-type="online">💻 Online Micro-Jobs <span class="pill-badge" id="badge-online-count">31</span></button>
+      <button class="quick-pill" data-pill-type="physical">📍 Physical / Local <span class="pill-badge" id="badge-physical-count">12</span></button>
+      <button class="quick-pill" data-pill-time="30">⚡ Quick (≤ 30m) <span class="pill-badge" id="badge-quick-count">23</span></button>
+    </div>
+
+    <!-- Active Filter Badges Bar -->
+    <div id="active-filter-chips" class="active-filters-bar" style="display:none">
+      <span class="active-filters-label">Active:</span>
+      <div id="chips-container" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"></div>
+      <button class="btn-clear-all-chips" id="btn-clear-all-chips">✕ Clear All Filters</button>
+    </div>
+
+    <div class="tasks-toolbar">
+      <span class="tasks-count" id="tasks-count">Loading tasks...</span>
+      <form id="search-form" style="display:flex;gap:8px;position:relative">
+        <div class="search-box-container">
+          <input type="text" id="search-input" placeholder="Search by title, tag, area..."
+            style="font:inherit;font-size:.88rem;padding:9px 34px 9px 13px;border:1.5px solid var(--line);border-radius:10px;outline:none;min-width:240px">
+          <button type="button" id="search-clear-btn" class="search-clear-btn" title="Clear search">✕</button>
+        </div>
+        <button class="btn btn-green" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="tasks-grid" id="tasks-grid"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="f-brand">
+      <a class="logo" href="/">
+        <span class="logo-x">X</span>
+        <span class="logo-text">Xtra<b>Earn</b></span>
+      </a>
+      <p>A platform where people turn their spare time, skills and expertise into extra income.</p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">◎</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="f-col">
+      <h4>For Users</h4>
+      <a href="/tasks">Find Tasks</a>
+      <a href="/tasks">I Want to Earn</a>
+      <a href="/#how-it-works">How It Works</a>
+      <a href="/profile">My Profile</a>
+      <a href="/wallet">My Wallet</a>
+    </div>
+    <div class="f-col">
+      <h4>For Businesses</h4>
+      <a href="#" class="js-need-help">Post a Task</a>
+      <a href="/#how-it-works">Why XtraEarn</a>
+      <a href="/#experts">Verified Experts</a>
+      <a href="/#physical">On-Site Help</a>
+      <a href="/#cta">Pricing &amp; Solutions</a>
+    </div>
+    <div class="f-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Careers</a>
+      <a href="#">Blog</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div class="f-col">
+      <h4>Support</h4>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQs</a>
+      <a href="#">Safety Center</a>
+      <a href="#">Community</a>
+    </div>
+    <div class="f-col f-app">
+      <h4>Download Our App</h4>
+      <a class="store-badge" href="#">▶<span><small>GET IT ON</small><b>Google Play</b></span></a>
+      <a class="store-badge" href="#"><span class="apple"></span><span><small>Download on the</small><b>App Store</b></span></a>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 XtraEarn. All rights reserved.</span>
+    <span class="fb-right">
+      <span class="lang-switch dark">🌐 English ▾</span>
+      <span class="lang-switch dark">BDT (৳) ▾</span>
+    </span>
+  </div>
+</footer>
+
+<script src="/js/countries.js"></script>
+<script src="/js/taskPostingEngine.js?v=10.0"></script>
+<script src="/js/shared.js?v=10.0"></script>
+<script src="/js/tasks.js?v=10.0"></script>
+</body>
+</html>
