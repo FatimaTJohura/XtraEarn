@@ -475,16 +475,16 @@ async function sendEmail({ to, subject, html, text, fromName, fromEmail, templat
   }
 
   const senderDisplayName = fromName || process.env.SENDGRID_FROM_NAME || 'XtraEarn Platform';
-  const senderEmailAddr = fromEmail || process.env.BREVO_FROM_EMAIL || 'xcseman@gmail.com';
+  const senderEmailAddr = fromEmail || process.env.BREVO_FROM_EMAIL || 'no-reply@xtraearn.com';
   const replyToAddr = process.env.BREVO_REPLY_TO || 'support@xtraearn.com';
 
   // 1. Live Email Dispatch via Brevo SMTP (Primary Active Gateway)
   const brevoHost = process.env.BREVO_SMTP_HOST || 'smtp-relay.brevo.com';
   const brevoPort = parseInt(process.env.BREVO_SMTP_PORT || '587');
-  const brevoUser = process.env.BREVO_SMTP_USER || 'b833e6001@smtp-brevo.com';
+  const brevoUser = process.env.BREVO_SMTP_USER || '';
   const brevoPass = process.env.BREVO_SMTP_PASS;
 
-  if (brevoPass) {
+  if (brevoPass && brevoUser) {
     try {
       await sendViaSmtp({
         host: brevoHost,
@@ -507,7 +507,7 @@ async function sendEmail({ to, subject, html, text, fromName, fromEmail, templat
   const sendgridKey = process.env.SENDGRID_API_KEY;
   if (!brevoPass && sendgridKey && sendgridKey.startsWith('SG.')) {
     try {
-      const senderEmail = fromEmail || process.env.SENDGRID_FROM_EMAIL || 'xcseman@gmail.com';
+      const senderEmail = fromEmail || process.env.SENDGRID_FROM_EMAIL || 'no-reply@xtraearn.com';
       const senderName = fromName || process.env.SENDGRID_FROM_NAME || 'XtraEarn Platform';
 
       const payload = JSON.stringify({
