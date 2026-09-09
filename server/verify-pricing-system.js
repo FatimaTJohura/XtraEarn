@@ -61,7 +61,7 @@ async function runVerification() {
   await asyncTest('Admin login', async () => {
     const res = await request('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email: 'admin@xtraearn.com', password: 'password123' })
+      body: JSON.stringify({ email: 'admin@xtraearn.com', password: 'Password123!' })
     });
     assert.ok(res.data.token, 'Admin token returned');
     adminToken = res.data.token;
@@ -70,7 +70,7 @@ async function runVerification() {
   await asyncTest('Client login', async () => {
     const res = await request('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email: 'bdshop@example.com', password: 'password123' })
+      body: JSON.stringify({ email: 'bdshop@example.com', password: 'Password123!' })
     });
     assert.ok(res.data.token, 'Client token returned');
     clientToken = res.data.token;
@@ -79,7 +79,7 @@ async function runVerification() {
   await asyncTest('Worker login', async () => {
     const res = await request('/api/auth/login', {
       method: 'POST',
-      body: JSON.stringify({ email: 'rahat@example.com', password: 'password123' })
+      body: JSON.stringify({ email: 'rahat@example.com', password: 'Password123!' })
     });
     assert.ok(res.data.token, 'Worker token returned');
     workerToken = res.data.token;

@@ -47,9 +47,8 @@ router.post('/login', async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ error: 'Incorrect email or password' });
     }
-    const isBcryptMatch = user.password_hash ? await bcrypt.compare(String(password), user.password_hash).catch(() => false) : false;
-    const isPlainMatch = (password === 'password123' || password === 'Password123!');
-    if (!isBcryptMatch && !isPlainMatch) {
+    const isMatch = user.password_hash ? await bcrypt.compare(String(password), user.password_hash).catch(() => false) : false;
+    if (!isMatch) {
       return res.status(401).json({ error: 'Incorrect email or password' });
     }
     res.json({ token: signToken(user), user: store.publicUser(user) });

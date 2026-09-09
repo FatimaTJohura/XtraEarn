@@ -50,7 +50,7 @@ router.post('/withdraw', authRequired, async (req, res, next) => {
   try {
     const amount = Number(req.body && req.body.amount);
     const method = ['bkash', 'nagad', 'bank'].includes(req.body.method) ? req.body.method : null;
-    const account = (req.body.account || '').trim();
+    const account = (req.body.account || req.body.account_number || '').trim();
     if (!method) return res.status(400).json({ error: 'Choose bKash, Nagad or Bank' });
     if (!account || account.length < 5) return res.status(400).json({ error: 'Enter a valid account number' });
     if (!amount || amount < 100) return res.status(400).json({ error: 'Minimum withdrawal is ৳100' });

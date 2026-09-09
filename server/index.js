@@ -1,4 +1,13 @@
 require('dotenv').config();
+
+// Production Environment & Secrets Safety Guard
+if (process.env.NODE_ENV === 'production') {
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'xtraearn-dev-secret-change-me' || process.env.JWT_SECRET.length < 32) {
+    console.error('[FATAL CONFIG ERROR] JWT_SECRET must be set to a secure string with at least 32 characters in production.');
+    process.exit(1);
+  }
+}
+
 const path = require('path');
 const express = require('express');
 const cors = require('cors');

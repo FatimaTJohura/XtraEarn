@@ -26,8 +26,8 @@ async function requireParticipant(req, res, next) {
   try {
     const task = await store.getTask(req.params.taskId || req.body.taskId || req.params.id);
     if (!task) return res.status(404).json({ error: 'Task not found' });
-    const isOwner = task.clientId === req.user.id;
-    const isHired = task.acceptedFreelancerId === req.user.id;
+    const isOwner = Number(task.clientId) === Number(req.user.id);
+    const isHired = Number(task.acceptedFreelancerId) === Number(req.user.id);
     const isAdmin = req.user.role === 'admin';
     if (!isOwner && !isHired && !isAdmin) {
       return res.status(403).json({ error: 'Only the client and the hired worker can access this workspace' });
@@ -43,7 +43,7 @@ router.post('/', authRequired, upload.single('file'), async (req, res, next) => 
     const taskId = Number(req.body.taskId);
     const task = await store.getTask(taskId);
     if (!task) return res.status(404).json({ error: 'Task not found' });
-    if (task.acceptedFreelancerId !== req.user.id) {
+    if (Number(task.acceptedFreelancerId) !== Number(req.user.id)) {
       return res.status(403).json({ error: 'Only the hired worker can submit a delivery' });
     }
     if (!['in_progress', 'delivered'].includes(task.status)) {

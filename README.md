@@ -84,16 +84,17 @@ All seeded users share the password **`Password123!`**
 
 ```
 ├── database/
-│   ├── schema.sql        # MySQL schema
-│   └── seed.sql          # demo data
+│   ├── schema.sql        # MySQL schema, indexes, FKs, and views
+│   └── seed.sql          # demo data with bcrypt hashes
 ├── server/
-│   ├── index.js          # Express app + static hosting
-│   ├── db.js             # MySQL pool + automatic memory fallback
-│   ├── store.js          # data access (SQL + in-memory implementations)
-│   ├── seedData.js       # JS mirror of seed.sql for fallback mode
-│   ├── middleware/auth.js# JWT sign/verify middleware
-│   ├── routes/           # auth, tasks, categories, earners, testimonials, stats
-│   └── test-api.js       # 40-case API smoke test (node server/test-api.js)
+│   ├── index.js          # Express app, security validator, static hosting
+│   ├── db.js             # MySQL pool + schema health checks
+│   ├── store.js          # Authoritative data access (MySQL persistence)
+│   ├── seedData.js       # JS seed mirror
+│   ├── middleware/auth.js# JWT sign/verify, roleRequired, adminRequired
+│   ├── routes/           # auth, tasks, wallet, consult, admin, etc.
+│   ├── verify-security.js# Automated security test harness (17 assertions)
+│   └── test-api.js       # 108-case marketplace functional test suite
 ├── public/
 │   ├── index.html        # landing page
 │   ├── tasks.html        # browse tasks
@@ -103,10 +104,27 @@ All seeded users share the password **`Password123!`**
 └── package.json
 ```
 
-## Scripts
+## Security & Architecture Hardening
+
+XtraEarn has been hardened for production deployment:
+
+1. **Zero Credential Bypasses**: All legacy hardcoded plain-text bypasses (`password123` / `Password123!`) have been permanently purged from `server/routes/auth.js` and password change routines. Authentication strictly verifies salted Bcrypt hashes (`$2a$10$...`).
+2. **Consultation Escrow Protection**: Endpoints `/api/consult/booking/:id/complete` and `/api/consult/booking/:id/cancel` enforce authentication and strict participant ownership validation (client, specialist, or admin), rejecting unauthorized callers with standard 401/403 errors.
+3. **Wallet Integrity & Atomic Deductions**: Wallet withdrawals enforce available balance verification prior to dispatch. Over-balance withdrawals are strictly blocked with 400 Bad Request. Task and consultation escrow releases implement atomic status guards to prevent race conditions or double payout.
+4. **Authoritative Persistence**: Consultation bookings, consultation notes, admin wallet freezes, balance adjustments, reviews, deliveries, and task state mutations persist directly to MySQL tables without split-brain in-memory divergence.
+5. **Configuration Hygiene**: Secrets are isolated via `.env.example` templates. In production (`NODE_ENV=production`), server startup fails fast if `JWT_SECRET` is insecure, missing, or set to default placeholders.
+
+## Verification & Testing
+
+Verify system security and marketplace functionality with the automated suites:
 
 ```bash
-npm start        # start the server (http://localhost:3000)
-npm run dev      # start with auto-reload on file changes
-node server/test-api.js   # run API smoke tests (server must be running)
+# Security verification suite (Auth, RBAC, Escrow ownership, Wallet guards, Durability)
+node server/verify-security.js
+
+# Full marketplace regression suite (108 end-to-end tests)
+node server/test-api.js
+
+# Pricing, commissions, and monetization verification suite
+node server/verify-pricing-system.js
 ```

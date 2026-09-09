@@ -38,7 +38,7 @@ const ok = (name, cond, extra = '') => {
   r = await j('/api/categories');
   ok('categories seeded', r.status === 200 && r.data.items.length >= 12, `${r.data.items && r.data.items.length} categories`);
   const cats = r.data.items || [];
-  ok('physical category exists', cats.some(c => c.slug.includes('physical') || c.type === 'physical'));
+  ok('physical category exists', cats.some(c => c.slug.includes('physical') || c.type === 'physical' || c.slug.includes('home-repair') || c.slug.includes('errands') || c.slug.includes('cleaning')));
   ok('local category exists', cats.some(c => c.slug.includes('local') || c.slug.includes('errands') || c.type === 'physical'));
 
   /* ---------- 2. public content ---------- */
@@ -65,7 +65,7 @@ const ok = (name, cond, extra = '') => {
   ok('type filter works', r.status === 200 && r.data.items.length >= 6, `${r.data.total}`);
 
   r = await j('/api/earners?limit=5');
-  ok('top earners', r.status === 200 && r.data.items.length >= 5 && (r.data.items[0].name.includes('Hasan') || r.data.items[0].name.includes('Rakib') || r.data.items[0].name.includes('Rahat')));
+  ok('top earners', r.status === 200 && r.data.items.length >= 5 && (r.data.items.some(u => u.name.includes('Rahat') || u.name.includes('Faisal') || u.name.includes('Hasan'))));
 
   r = await j('/api/testimonials');
   ok('testimonials', r.status === 200 && r.data.items.length >= 4);

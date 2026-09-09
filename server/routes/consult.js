@@ -22,26 +22,52 @@ router.get('/my', authOptional, async (req, res, next) => {
 });
 
 // POST /api/consult/booking/:id/complete - Mark consultation completed & release escrow
-router.post('/booking/:id/complete', authOptional, async (req, res, next) => {
+router.post('/booking/:id/complete', authRequired, async (req, res, next) => {
   try {
-    const booking = store.completeConsultationBooking(req.params.id, req.user);
+    const booking = await store.completeConsultationBooking(req.params.id, req.user);
     res.json({ success: true, booking });
-  } catch (err) { next(err); }
+  } catch (err) {
+    if (err.statusCode) return res.status(err.statusCode).json({ error: err.message });
+    if (err.status) return res.status(err.status).json({ error: err.message });
+    if (err.message && (err.message.includes('permission') || err.message.includes('Only the booking client'))) {
+      return res.status(403).json({ error: err.message });
+    }
+    if (err.message && err.message.includes('already')) {
+      return res.status(409).json({ error: err.message });
+    }
+    if (err.message && err.message.includes('not found')) {
+      return res.status(404).json({ error: err.message });
+    }
+    next(err);
+  }
 });
 
 // POST /api/consult/booking/:id/cancel - Cancel consultation & refund client escrow
-router.post('/booking/:id/cancel', authOptional, async (req, res, next) => {
+router.post('/booking/:id/cancel', authRequired, async (req, res, next) => {
   try {
-    const reason = req.body.reason || 'Cancelled by client/consultant';
-    const booking = store.cancelConsultationBooking(req.params.id, req.user, reason);
+    const reason = (req.body && req.body.reason) || 'Cancelled by client/consultant';
+    const booking = await store.cancelConsultationBooking(req.params.id, req.user, reason);
     res.json({ success: true, booking });
-  } catch (err) { next(err); }
+  } catch (err) {
+    if (err.statusCode) return res.status(err.statusCode).json({ error: err.message });
+    if (err.status) return res.status(err.status).json({ error: err.message });
+    if (err.message && (err.message.includes('permission') || err.message.includes('do not have permission'))) {
+      return res.status(403).json({ error: err.message });
+    }
+    if (err.message && err.message.includes('already')) {
+      return res.status(409).json({ error: err.message });
+    }
+    if (err.message && err.message.includes('not found')) {
+      return res.status(404).json({ error: err.message });
+    }
+    next(err);
+  }
 });
 
 // GET /api/consult/room/:roomId - Fetch full room dossier & state
 router.get('/room/:roomId', async (req, res, next) => {
   try {
-    const room = store.getConsultationRoom(req.params.roomId);
+    const room = await store.getConsultationRoom(req.params.roomId);
     if (!room) return res.status(404).json({ error: 'Consultation room not found' });
     res.json(room);
   } catch (err) { next(err); }
@@ -50,7 +76,7 @@ router.get('/room/:roomId', async (req, res, next) => {
 // POST /api/consult/room/:roomId/message - Send in-meeting chat message or file
 router.post('/room/:roomId/message', async (req, res, next) => {
   try {
-    const msg = store.addConsultationRoomMessage(req.params.roomId, req.body);
+    const msg = await store.addConsultationRoomMessage(req.params.roomId, req.body);
     res.status(201).json({ success: true, message: msg });
   } catch (err) { next(err); }
 });
@@ -58,7 +84,7 @@ router.post('/room/:roomId/message', async (req, res, next) => {
 // POST /api/consult/room/:roomId/notes - Save digital prescription / advice pad notes
 router.post('/room/:roomId/notes', async (req, res, next) => {
   try {
-    const notes = store.saveConsultationRoomNotes(req.params.roomId, req.body);
+    const notes = await store.saveConsultationRoomNotes(req.params.roomId, req.body);
     res.json({ success: true, notes });
   } catch (err) { next(err); }
 });
@@ -66,7 +92,7 @@ router.post('/room/:roomId/notes', async (req, res, next) => {
 // POST /api/consult/room/:roomId/complete - End session & release escrow
 router.post('/room/:roomId/complete', async (req, res, next) => {
   try {
-    const result = store.completeConsultationSession(req.params.roomId, req.body);
+    const result = await store.completeConsultationSession(req.params.roomId, req.body);
     res.json(result);
   } catch (err) { next(err); }
 });

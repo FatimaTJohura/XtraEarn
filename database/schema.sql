@@ -240,6 +240,34 @@ CREATE TABLE IF NOT EXISTS task_applications (
   CONSTRAINT fk_app_freelancer FOREIGN KEY (freelancer_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS applications (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  task_id         INT           NOT NULL,
+  freelancer_id   INT           NOT NULL,
+  message         TEXT          DEFAULT NULL,
+  status          ENUM('pending','accepted','rejected','withdrawn') NOT NULL DEFAULT 'pending',
+  created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_app_task_free (task_id, freelancer_id),
+  INDEX idx_app_task (task_id),
+  INDEX idx_app_free (freelancer_id),
+  CONSTRAINT fk_app_tasks FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE,
+  CONSTRAINT fk_app_freelancers FOREIGN KEY (freelancer_id) REFERENCES users (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------------------------------------------
+-- 9b. TESTIMONIALS
+-- Platform user reviews & verified endorsements
+-- ----------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS testimonials (
+  id              INT AUTO_INCREMENT PRIMARY KEY,
+  user_id         INT          NOT NULL,
+  quote           TEXT         NOT NULL,
+  rating          INT          NOT NULL DEFAULT 5,
+  created_at      TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_testim_user (user_id),
+  CONSTRAINT fk_testim_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ----------------------------------------------------------------
 -- 10. TASK DELIVERIES & SUBMISSIONS
 -- Finished deliverable uploads, work proofs, reviews & approvals
@@ -586,6 +614,21 @@ CREATE TABLE IF NOT EXISTS site_settings (
   cta_title         VARCHAR(255) DEFAULT NULL,
   cta_subtitle      TEXT         DEFAULT NULL,
   updated_at        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id           INT AUTO_INCREMENT PRIMARY KEY,
+  review_code  VARCHAR(40)   DEFAULT NULL UNIQUE,
+  task_id      INT           DEFAULT NULL,
+  booking_id   INT           DEFAULT NULL,
+  reviewer_id  INT           NOT NULL,
+  reviewee_id  INT           NOT NULL,
+  rating       DECIMAL(3,2)  NOT NULL,
+  comment      TEXT          DEFAULT NULL,
+  created_at   TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_rev_reviewer (reviewer_id),
+  INDEX idx_rev_reviewee (reviewee_id),
+  INDEX idx_rev_task (task_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------------------------------------------
