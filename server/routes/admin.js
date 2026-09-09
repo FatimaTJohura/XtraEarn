@@ -1350,14 +1350,14 @@ router.get('/wallets/kpis', async (req, res, next) => {
 
 router.get('/wallets', async (req, res, next) => {
   try {
-    const data = store.adminListWallets(req.query);
+    const data = await store.adminListWallets(req.query);
     res.json(data);
   } catch (err) { next(err); }
 });
 
 router.get('/wallets/:id', async (req, res, next) => {
   try {
-    const item = store.adminGetWalletDetail(req.params.id);
+    const item = await store.adminGetWalletDetail(req.params.id);
     if (!item) return res.status(404).json({ error: 'Wallet record not found' });
     res.json(item);
   } catch (err) { next(err); }
@@ -1374,7 +1374,7 @@ router.post('/wallets/:id/adjust', async (req, res, next) => {
 router.post('/wallets/:id/freeze', async (req, res, next) => {
   try {
     const isFrozen = req.body.is_frozen !== undefined ? Number(req.body.is_frozen) : 1;
-    const result = store.adminToggleWalletFreeze(req.params.id, isFrozen, req.body.reason);
+    const result = await store.adminToggleWalletFreeze(req.params.id, isFrozen, req.body.reason);
     if (!result) return res.status(404).json({ error: 'User wallet not found' });
     res.json(result);
   } catch (err) { next(err); }
