@@ -14136,16 +14136,32 @@ function reviewExpertApplication(appId, decision, payload = {}) {
   return app;
 }
 
-function getConsultationRoom(roomId) {
+async function getConsultationRoom(roomId) {
   const m = mem();
   const rawId = String(roomId || '').trim();
   const cleanId = rawId.replace(/^(https?:\/\/[^\/]+)?(\/consult\/|\/meet\/)?/, '');
 
-  let booking = (m.consultation_bookings || []).find(b =>
-    (b.meeting_link && b.meeting_link.toLowerCase().includes(cleanId.toLowerCase())) ||
-    (b.booking_code && b.booking_code.toLowerCase().includes(cleanId.toLowerCase())) ||
-    String(b.id) === cleanId
-  );
+  let booking = null;
+  let isMySQLBooking = false;
+  if (!db.isMemory()) {
+    const isNum = !isNaN(cleanId) && cleanId !== '';
+    const [rows] = await db.pool.query(
+      'SELECT * FROM consultation_bookings WHERE meeting_link LIKE ? OR booking_code LIKE ?' + (isNum ? ' OR id = ?' : '') + ' LIMIT 1',
+      isNum ? [`%${cleanId}%`, `%${cleanId}%`, Number(cleanId)] : [`%${cleanId}%`, `%${cleanId}%`]
+    ).catch(() => [[]]);
+    if (rows && rows.length) {
+      booking = rows[0];
+      isMySQLBooking = true;
+    }
+  }
+
+  if (!booking) {
+    booking = (m.consultation_bookings || []).find(b =>
+      (b.meeting_link && b.meeting_link.toLowerCase().includes(cleanId.toLowerCase())) ||
+      (b.booking_code && b.booking_code.toLowerCase().includes(cleanId.toLowerCase())) ||
+      String(b.id) === cleanId
+    );
+  }
 
   // If not found in memory bookings, generate a realistic active consultation room context
   if (!booking) {
@@ -14188,36 +14204,78 @@ function getConsultationRoom(roomId) {
   }
 
   // Get matching expert profile
-  const expert = (m.experts || []).find(e => e.id === booking.expert_id) || {};
-
-  if (!m.consultation_messages) m.consultation_messages = {};
-  if (!m.consultation_messages[cleanId]) {
-    m.consultation_messages[cleanId] = [
-      {
-        id: 1,
-        sender_name: 'System Bot',
-        sender_role: 'system',
-        text: `🔒 Encrypted 256-bit WebRTC Session Initialized. Session Code: ${booking.booking_code}. Escrow guaranteed.`,
-        created_at: new Date(Date.now() - 120000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      },
-      {
-        id: 2,
-        sender_name: booking.expert_name,
-        sender_role: 'specialist',
-        text: `Assalamu Alaikum! Welcome to the 1-on-1 consultation session. Please let me know if your audio and video are working clearly.`,
-        created_at: new Date(Date.now() - 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }
-    ];
+  let expert = null;
+  if (!db.isMemory() && booking && booking.expert_id) {
+    const [expRows] = await db.pool.query('SELECT * FROM experts WHERE id = ? LIMIT 1', [booking.expert_id]).catch(() => [[]]);
+    if (expRows && expRows.length) expert = expRows[0];
+  }
+  if (!expert) {
+    expert = (m.experts || []).find(e => e.id === booking.expert_id) || {};
   }
 
-  if (!m.consultation_notes) m.consultation_notes = {};
-  if (!m.consultation_notes[cleanId]) {
-    m.consultation_notes[cleanId] = {
-      diagnosis: '',
-      observations: booking.consultation_notes || '',
-      prescriptions: '',
-      follow_up: 'Review in 2 weeks or if symptoms persist.'
-    };
+  let roomMessages = [];
+  let roomNotes = null;
+
+  if (isMySQLBooking) {
+    const [msgRows] = await db.pool.query(
+      'SELECT id, sender_name, sender_role, text, attachment, created_at FROM consultation_messages WHERE booking_id = ? ORDER BY created_at ASC, id ASC',
+      [booking.id]
+    );
+    roomMessages = msgRows;
+
+    const [noteRows] = await db.pool.query(
+      'SELECT diagnosis, observations, prescriptions, follow_up, updated_at FROM consultation_notes WHERE booking_id = ? LIMIT 1',
+      [booking.id]
+    );
+    if (noteRows && noteRows.length) {
+      roomNotes = {
+        diagnosis: noteRows[0].diagnosis || '',
+        observations: noteRows[0].observations || '',
+        prescriptions: noteRows[0].prescriptions || '',
+        follow_up: noteRows[0].follow_up || '',
+        updated_at: noteRows[0].updated_at
+      };
+    } else {
+      roomNotes = {
+        diagnosis: '',
+        observations: booking.consultation_notes || booking.client_notes || '',
+        prescriptions: '',
+        follow_up: 'Review in 2 weeks or if symptoms persist.',
+        updated_at: null
+      };
+    }
+  } else {
+    if (!m.consultation_messages) m.consultation_messages = {};
+    if (!m.consultation_messages[cleanId]) {
+      m.consultation_messages[cleanId] = [
+        {
+          id: 1,
+          sender_name: 'System Bot',
+          sender_role: 'system',
+          text: `🔒 Encrypted 256-bit WebRTC Session Initialized. Session Code: ${booking.booking_code}. Escrow guaranteed.`,
+          created_at: new Date(Date.now() - 120000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        },
+        {
+          id: 2,
+          sender_name: booking.expert_name,
+          sender_role: 'specialist',
+          text: `Assalamu Alaikum! Welcome to the 1-on-1 consultation session. Please let me know if your audio and video are working clearly.`,
+          created_at: new Date(Date.now() - 60000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ];
+    }
+    roomMessages = m.consultation_messages[cleanId];
+
+    if (!m.consultation_notes) m.consultation_notes = {};
+    if (!m.consultation_notes[cleanId]) {
+      m.consultation_notes[cleanId] = {
+        diagnosis: '',
+        observations: booking.consultation_notes || booking.client_notes || '',
+        prescriptions: '',
+        follow_up: 'Review in 2 weeks or if symptoms persist.'
+      };
+    }
+    roomNotes = m.consultation_notes[cleanId];
   }
 
   return {
@@ -14239,14 +14297,57 @@ function getConsultationRoom(roomId) {
       phone: booking.user_phone,
       email: booking.user_email
     },
-    messages: m.consultation_messages[cleanId],
-    notes: m.consultation_notes[cleanId]
+    messages: roomMessages,
+    notes: roomNotes
   };
 }
 
-function addConsultationRoomMessage(roomId, msgData = {}) {
-  const m = mem();
+async function addConsultationRoomMessage(roomId, msgData = {}) {
   const cleanId = String(roomId || '').replace(/^(https?:\/\/[^\/]+)?(\/consult\/|\/meet\/)?/, '');
+
+  if (!db.isMemory()) {
+    const isNum = !isNaN(cleanId) && cleanId !== '';
+    const [bRows] = await db.pool.query(
+      'SELECT id FROM consultation_bookings WHERE meeting_link LIKE ? OR booking_code LIKE ?' + (isNum ? ' OR id = ?' : '') + ' LIMIT 1',
+      isNum ? [`%${cleanId}%`, `%${cleanId}%`, Number(cleanId)] : [`%${cleanId}%`, `%${cleanId}%`]
+    );
+    if (!bRows || !bRows.length) {
+      const err = new Error('Consultation booking not found');
+      err.status = 404;
+      throw err;
+    }
+    const bookingId = bRows[0].id;
+
+    const senderId = msgData.sender_id || msgData.senderId || msgData.user_id || msgData.userId || null;
+    const senderName = msgData.sender_name || msgData.senderName || 'Client';
+    const senderRole = msgData.sender_role || msgData.senderRole || 'client';
+    const text = (msgData.text || msgData.body || msgData.message || '').trim();
+    const attachment = msgData.attachment || null;
+
+    const [insertResult] = await db.pool.query(
+      `INSERT INTO consultation_messages (booking_id, sender_id, sender_name, sender_role, text, attachment)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [bookingId, senderId, senderName, senderRole, text, attachment]
+    );
+
+    const [createdRows] = await db.pool.query(
+      'SELECT id, sender_name, sender_role, text, attachment, created_at FROM consultation_messages WHERE id = ?',
+      [insertResult.insertId]
+    );
+
+    return createdRows[0] || {
+      id: insertResult.insertId,
+      booking_id: bookingId,
+      sender_id: senderId,
+      sender_name: senderName,
+      sender_role: senderRole,
+      text,
+      attachment,
+      created_at: new Date()
+    };
+  }
+
+  const m = mem();
   if (!m.consultation_messages) m.consultation_messages = {};
   if (!m.consultation_messages[cleanId]) m.consultation_messages[cleanId] = [];
 
@@ -14264,21 +14365,67 @@ function addConsultationRoomMessage(roomId, msgData = {}) {
   return newMsg;
 }
 
-function saveConsultationRoomNotes(roomId, notesData = {}) {
-  const m = mem();
+async function saveConsultationRoomNotes(roomId, notesData = {}) {
   const cleanId = String(roomId || '').replace(/^(https?:\/\/[^\/]+)?(\/consult\/|\/meet\/)?/, '');
+
+  if (!db.isMemory()) {
+    const isNum = !isNaN(cleanId) && cleanId !== '';
+    const [bRows] = await db.pool.query(
+      'SELECT id FROM consultation_bookings WHERE meeting_link LIKE ? OR booking_code LIKE ?' + (isNum ? ' OR id = ?' : '') + ' LIMIT 1',
+      isNum ? [`%${cleanId}%`, `%${cleanId}%`, Number(cleanId)] : [`%${cleanId}%`, `%${cleanId}%`]
+    );
+    if (!bRows || !bRows.length) {
+      const err = new Error('Consultation booking not found');
+      err.status = 404;
+      throw err;
+    }
+    const bookingId = bRows[0].id;
+
+    const diagnosis = notesData.diagnosis || null;
+    const observations = notesData.observations || null;
+    const prescriptions = notesData.prescriptions || null;
+    const followUp = notesData.follow_up || null;
+
+    await db.pool.query(
+      `INSERT INTO consultation_notes (booking_id, diagnosis, observations, prescriptions, follow_up)
+       VALUES (?, ?, ?, ?, ?)
+       ON DUPLICATE KEY UPDATE
+         diagnosis = VALUES(diagnosis),
+         observations = VALUES(observations),
+         prescriptions = VALUES(prescriptions),
+         follow_up = VALUES(follow_up)`,
+      [bookingId, diagnosis, observations, prescriptions, followUp]
+    );
+
+    const [noteRows] = await db.pool.query(
+      'SELECT diagnosis, observations, prescriptions, follow_up, updated_at FROM consultation_notes WHERE booking_id = ?',
+      [bookingId]
+    );
+
+    const row = noteRows && noteRows.length ? noteRows[0] : null;
+    return {
+      diagnosis: row ? row.diagnosis || '' : (notesData.diagnosis || ''),
+      observations: row ? row.observations || '' : (notesData.observations || ''),
+      prescriptions: row ? row.prescriptions || '' : (notesData.prescriptions || ''),
+      follow_up: row ? row.follow_up || '' : (notesData.follow_up || ''),
+      updated_at: row ? row.updated_at : new Date().toISOString()
+    };
+  }
+
+  const m = mem();
   if (!m.consultation_notes) m.consultation_notes = {};
 
-  m.consultation_notes[cleanId] = {
+  const notesObj = {
     diagnosis: notesData.diagnosis || '',
     observations: notesData.observations || '',
     prescriptions: notesData.prescriptions || '',
     follow_up: notesData.follow_up || '',
     updated_at: new Date().toISOString()
   };
+  m.consultation_notes[cleanId] = notesObj;
 
   saveDbToDisk();
-  return m.consultation_notes[cleanId];
+  return notesObj;
 }
 
 function completeConsultationSession(roomId, data = {}) {
